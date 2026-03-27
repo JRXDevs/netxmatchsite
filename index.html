@@ -443,23 +443,23 @@ async function hashPassword(pw) {
   return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
-// ─── Storage ───
-async function loadAllUsers() {
-  try { const r = await window.storage.get('netx-users'); return r ? JSON.parse(r.value) : []; }
+// ─── Storage (localStorage — works in any browser) ───
+function loadAllUsers() {
+  try { const r = localStorage.getItem('netx-users'); return r ? JSON.parse(r) : []; }
   catch { return []; }
 }
-async function saveAllUsers(users) {
-  try { await window.storage.set('netx-users', JSON.stringify(users)); } catch(e) { console.error('Save error:',e); }
+function saveAllUsers(users) {
+  try { localStorage.setItem('netx-users', JSON.stringify(users)); } catch(e) { console.error('Save error:',e); }
 }
-async function loadSession() {
-  try { const r = await window.storage.get('netx-session'); return r ? JSON.parse(r.value) : null; }
+function loadSession() {
+  try { const r = localStorage.getItem('netx-session'); return r ? JSON.parse(r) : null; }
   catch { return null; }
 }
-async function saveSession(data) {
-  try { await window.storage.set('netx-session', JSON.stringify(data)); } catch(e) { console.error('Session error:',e); }
+function saveSession(data) {
+  try { localStorage.setItem('netx-session', JSON.stringify(data)); } catch(e) { console.error('Session error:',e); }
 }
-async function clearSession() {
-  try { await window.storage.delete('netx-session'); } catch(e) {} 
+function clearSession() {
+  try { localStorage.removeItem('netx-session'); } catch(e) {}
 }
 
 // ─── Interest taxonomy ───
@@ -541,15 +541,12 @@ function saveAndNav(from,to){
   if(from==='name')state.name=document.getElementById('inputName').value.trim();
   if(from==='email'){
     state.email=document.getElementById('inputEmail').value.trim();
-    // Check if email already exists
-    checkEmailExists(state.email).then(exists=>{
-      if(exists){
-        document.getElementById('emailExistsError').style.display='block';
-        return;
-      }
-      document.getElementById('emailExistsError').style.display='none';
-      navigate(to);
-    });
+    if(checkEmailExists(state.email)){
+      document.getElementById('emailExistsError').style.display='block';
+      return;
+    }
+    document.getElementById('emailExistsError').style.display='none';
+    navigate(to);
     return;
   }
   if(from==='focus')state.focus=document.getElementById('inputFocus').value.trim();
@@ -558,8 +555,8 @@ function saveAndNav(from,to){
   navigate(to);
 }
 
-async function checkEmailExists(email){
-  const users=await loadAllUsers();
+function checkEmailExists(email){
+  const users=loadAllUsers();
   return users.some(u=>u.email.toLowerCase()===email.toLowerCase());
 }
 
@@ -646,16 +643,16 @@ async function completeProfile(){
   state.id='user_'+Date.now();
   const userData={...state, passwordHash:pwHash, acceptedUsers:{}, declinedUsers:{}, messages:[]};
 
-  const allUsers=await loadAllUsers();
+  const allUsers=loadAllUsers();
   allUsers.push(userData);
-  await saveAllUsers(allUsers);
-  await saveSession({id:state.id,email:state.email});
+  saveAllUsers(allUsers);
+  saveSession({id:state.id,email:state.email});
 
   acceptedUsers={};declinedUsers={};messages=[];
 
-  setTimeout(async()=>{
+  setTimeout(()=>{
     clearInterval(iv);
-    const pool=await loadAllUsers();
+    const pool=loadAllUsers();
     currentUserMatches=computeMatches(state,pool);
     if(currentUserMatches.length>0)currentUserMatches.forEach(m=>sendNotificationEmail(state.email,m.name));
     renderDashboard();
@@ -670,7 +667,7 @@ async function doLogin(){
   const err=document.getElementById('loginError');
   if(!email||!pw){err.textContent='Please enter both email and password.';err.style.display='block';return;}
   const pwHash=await hashPassword(pw);
-  const allUsers=await loadAllUsers();
+  const allUsers=loadAllUsers();
   const user=allUsers.find(u=>u.email.toLowerCase()===email.toLowerCase()&&u.passwordHash===pwHash);
   if(!user){err.textContent='Invalid email or password.';err.style.display='block';return;}
   err.style.display='none';
@@ -681,18 +678,18 @@ async function doLogin(){
   declinedUsers=user.declinedUsers||{};
   messages=user.messages||[];
 
-  await saveSession({id:state.id,email:state.email});
+  saveSession({id:state.id,email:state.email});
 
-  const pool=await loadAllUsers();
+  const pool=loadAllUsers();
   currentUserMatches=computeMatches(state,pool);
   renderDashboard();
   navigate('dashboard');
 }
 
 // ─── Logout ───
-async function doLogout(){
-  await persistUserData();
-  await clearSession();
+function doLogout(){
+  persistUserData();
+  clearSession();
   Object.assign(state,{name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null});
   acceptedUsers={};declinedUsers={};messages=[];currentUserMatches=[];
   // Reset form fields
@@ -712,26 +709,26 @@ async function doLogout(){
 }
 
 // ─── Persist user data (accepted, declined, messages) ───
-async function persistUserData(){
+function persistUserData(){
   if(!state.id)return;
-  const allUsers=await loadAllUsers();
+  const allUsers=loadAllUsers();
   const idx=allUsers.findIndex(u=>u.id===state.id);
   if(idx>=0){
     allUsers[idx]={...allUsers[idx],...state,acceptedUsers,declinedUsers,messages};
-    await saveAllUsers(allUsers);
+    saveAllUsers(allUsers);
   }
 }
 
 // ─── Delete profile ───
 function openDeleteModal(){document.getElementById('deleteModal').classList.add('open');document.getElementById('deleteConfirmEmail').value='';}
 function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');}
-async function confirmDeleteProfile(){
+function confirmDeleteProfile(){
   const confirmEmail=document.getElementById('deleteConfirmEmail').value.trim();
   if(confirmEmail.toLowerCase()!==state.email.toLowerCase()){alert('Email does not match. Please type your email to confirm deletion.');return;}
-  const allUsers=await loadAllUsers();
+  const allUsers=loadAllUsers();
   const filtered=allUsers.filter(u=>u.id!==state.id);
-  await saveAllUsers(filtered);
-  await clearSession();
+  saveAllUsers(filtered);
+  clearSession();
   closeDeleteModal();
   closeSnapshot();
   Object.assign(state,{name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null});
@@ -740,11 +737,11 @@ async function confirmDeleteProfile(){
 }
 
 // ─── Recompute matches ───
-async function recomputeMatches(){
-  const pool=await loadAllUsers();
+function recomputeMatches(){
+  const pool=loadAllUsers();
   currentUserMatches=computeMatches(state,pool);
   acceptedUsers={};declinedUsers={};
-  await persistUserData();
+  persistUserData();
 }
 
 // ─── Render Dashboard ───
@@ -815,24 +812,24 @@ function closeSnapshotOutside(e){if(e.target===document.getElementById('snapshot
 // ─── Accept/decline with break ───
 function getAcceptedCount(){return Object.keys(acceptedUsers).length;}
 function tryAcceptMatch(idx){if(getAcceptedCount()>=2){pendingAcceptIdx=idx;document.getElementById('breakModal').classList.add('open');}else doAcceptMatch(idx);}
-async function doAcceptMatch(idx){
+function doAcceptMatch(idx){
   const m=currentUserMatches[idx];acceptedUsers[m.id]=true;
   sendNotificationEmail(m.email||'user@netx.com',state.name);
-  await persistUserData();
+  persistUserData();
   openSnapshot(idx);renderDashboard();showTab('matches');
 }
 function confirmAccept(){closeBreakModal();if(pendingAcceptIdx!==null){doAcceptMatch(pendingAcceptIdx);pendingAcceptIdx=null;}}
-async function declineMatch(idx){const m=currentUserMatches[idx];declinedUsers[m.id]=true;await persistUserData();closeSnapshot();renderDashboard();showTab('matches');}
+function declineMatch(idx){const m=currentUserMatches[idx];declinedUsers[m.id]=true;persistUserData();closeSnapshot();renderDashboard();showTab('matches');}
 function closeBreakModal(){document.getElementById('breakModal').classList.remove('open');}
 function showLearnMore(){closeBreakModal();document.getElementById('learnMoreModal').classList.add('open');}
 function closeLearnMore(){document.getElementById('learnMoreModal').classList.remove('open');}
 
 // ─── DM ───
-async function sendDM(idx){
+function sendDM(idx){
   const m=currentUserMatches[idx];const input=document.getElementById('dmInput-'+idx);const text=input.value.trim();if(!text)return;
   messages.push({to:m.name,text,time:new Date().toLocaleString()});
   sendDMNotificationEmail(m.email||'user@netx.com',state.name,text);
-  await persistUserData();
+  persistUserData();
   document.getElementById('dmForm-'+idx).style.display='none';
   document.getElementById('dmSent-'+idx).style.display='block';
   renderDashboard();showTab('matches');openSnapshot(idx);
@@ -861,7 +858,7 @@ function openEditProfile(){
 function toggleEditChip(el){el.classList.toggle('selected');}
 function selectEditChip(el){el.parentElement.querySelectorAll('.edit-chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');}
 function handleEditPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.photoData=r.result;document.querySelector('.edit-photo-zone').innerHTML=`<img src="${r.result}" alt="Photo" style="width:100%;height:100%;object-fit:cover;">`;};r.readAsDataURL(f);}
-async function saveEditProfile(){
+function saveEditProfile(){
   state.name=document.getElementById('editName').value.trim()||state.name;
   state.focus=document.getElementById('editFocus').value.trim()||state.focus;
   state.interests=document.getElementById('editInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
@@ -870,18 +867,18 @@ async function saveEditProfile(){
   if(cs)state.career=cs.dataset.value;
   state.connections=[...document.querySelectorAll('#editConnectionChips .edit-chip.selected')].map(c=>c.dataset.value);
   // Update in storage
-  const allUsers=await loadAllUsers();
+  const allUsers=loadAllUsers();
   const idx=allUsers.findIndex(u=>u.id===state.id);
-  if(idx>=0){allUsers[idx]={...allUsers[idx],...state};await saveAllUsers(allUsers);}
-  await recomputeMatches();
+  if(idx>=0){allUsers[idx]={...allUsers[idx],...state};saveAllUsers(allUsers);}
+  recomputeMatches();
   closeSnapshot();renderDashboard();showTab('profile');
 }
 
 // ─── Auto-login from session ───
-(async function init(){
-  const session=await loadSession();
+(function init(){
+  const session=loadSession();
   if(session&&session.id){
-    const allUsers=await loadAllUsers();
+    const allUsers=loadAllUsers();
     const user=allUsers.find(u=>u.id===session.id);
     if(user){
       Object.assign(state,{name:user.name,email:user.email,career:user.career,focus:user.focus,connections:user.connections,interests:user.interests,passion:user.passion,photoData:user.photoData,id:user.id});
