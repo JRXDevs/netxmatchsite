@@ -7,55 +7,40 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23ff9149'/><text x='16' y='23' text-anchor='middle' font-family='serif' font-weight='bold' font-size='20' fill='white'>N</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --orange:#ff9149;--teal:#0097b2;--orange-light:#fff3eb;--teal-light:#e6f6f9;
-  --orange-dark:#e07830;--teal-dark:#007a91;--bg:#fefcfa;--text:#1a1a2e;
-  --text-muted:#6b7280;--card-bg:#ffffff;--radius:16px;
-  --shadow:0 4px 24px rgba(0,0,0,0.06);--shadow-lg:0 12px 48px rgba(0,0,0,0.1);
-  --green:#10b981;--green-light:#ecfdf5;--red:#ef4444;--red-light:#fef2f2;
-}
+:root{--orange:#ff9149;--teal:#0097b2;--orange-light:#fff3eb;--teal-light:#e6f6f9;--orange-dark:#e07830;--teal-dark:#007a91;--bg:#fefcfa;--text:#1a1a2e;--text-muted:#6b7280;--card-bg:#ffffff;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,0.06);--shadow-lg:0 12px 48px rgba(0,0,0,0.1);--green:#10b981;--green-light:#ecfdf5;--red:#ef4444;--red-light:#fef2f2;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
-
 .bg-decoration{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .bg-decoration .orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.12;}
 .bg-decoration .orb-1{width:600px;height:600px;background:var(--orange);top:-200px;right:-100px;}
 .bg-decoration .orb-2{width:500px;height:500px;background:var(--teal);bottom:-150px;left:-100px;}
-
 .app-container{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:40px 20px 60px;min-height:100vh;}
-
 .progress-wrapper{margin-bottom:40px;}
 .progress-steps{display:flex;gap:6px;margin-bottom:8px;}
 .progress-step{flex:1;height:4px;border-radius:4px;background:#e5e7eb;transition:background 0.5s ease;}
 .progress-step.active{background:linear-gradient(90deg,var(--orange),var(--teal));}
 .progress-label{font-size:13px;color:var(--text-muted);font-weight:500;}
-
 .card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:40px 36px;border:1px solid rgba(0,0,0,0.04);}
-
 .welcome-header{text-align:center;margin-bottom:36px;}
 .welcome-logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;}
 .welcome-logo .logo-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--orange),var(--teal));border-radius:14px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Playfair Display',serif;font-weight:800;font-size:22px;box-shadow:0 4px 16px rgba(255,145,73,0.3);}
 .welcome-logo .logo-text{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--orange),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .welcome-header h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:8px;}
 .welcome-header p{color:var(--text-muted);font-size:16px;line-height:1.6;}
-
 .section-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:6px 14px;border-radius:100px;margin-bottom:20px;}
 .section-tag.about{background:var(--orange-light);color:var(--orange-dark);}
 .section-tag.fun{background:var(--teal-light);color:var(--teal-dark);}
 .question-label{font-size:17px;font-weight:600;margin-bottom:6px;}
 .question-hint{font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.5;}
-
 .option-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
 .option-chip{padding:14px 16px;border:2px solid #e5e7eb;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;text-align:center;transition:all 0.25s ease;background:white;user-select:none;}
 .option-chip:hover{border-color:var(--orange);background:var(--orange-light);}
 .option-chip.selected{border-color:var(--orange);background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:white;box-shadow:0 4px 12px rgba(255,145,73,0.3);}
 .option-chip.teal:hover{border-color:var(--teal);background:var(--teal-light);}
 .option-chip.teal.selected{border-color:var(--teal);background:linear-gradient(135deg,var(--teal),var(--teal-dark));box-shadow:0 4px 12px rgba(0,151,178,0.3);}
-
 .text-input{width:100%;padding:14px 16px;border:2px solid #e5e7eb;border-radius:12px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--text);transition:border-color 0.3s;background:white;resize:vertical;}
 .text-input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(0,151,178,0.1);}
 .text-input::placeholder{color:#c4c8cf;}
-
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border:none;border-radius:12px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.3s ease;}
 .btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:white;box-shadow:0 4px 16px rgba(255,145,73,0.3);}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(255,145,73,0.4);}
@@ -69,19 +54,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .btn-green:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(16,185,129,0.4);}
 .btn-decline{background:white;color:var(--text-muted);border:2px solid #e5e7eb;}
 .btn-decline:hover{border-color:var(--red);color:var(--red);}
+.btn-danger{background:white;color:var(--red);border:2px solid var(--red-light);font-size:13px;padding:10px 20px;}
+.btn-danger:hover{background:var(--red-light);border-color:var(--red);}
+.btn-logout{background:white;color:var(--text-muted);border:2px solid #e5e7eb;font-size:13px;padding:10px 20px;}
+.btn-logout:hover{border-color:var(--text-muted);color:var(--text);}
 .btn-row{display:flex;gap:12px;margin-top:28px;}
 .btn-row .btn{flex:1;}
-
 .skip-btn{background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;margin-top:8px;}
 .skip-btn:hover{color:var(--teal);}
-
-.photo-upload-zone{width:160px;height:160px;border-radius:50%;border:3px dashed #d1d5db;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin:0 auto 12px;transition:all 0.3s;overflow:hidden;position:relative;background:#f9fafb;}
+.photo-upload-zone{width:160px;height:160px;border-radius:50%;border:3px dashed #d1d5db;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin:0 auto 12px;transition:all 0.3s;overflow:hidden;background:#f9fafb;}
 .photo-upload-zone:hover{border-color:var(--orange);background:var(--orange-light);}
 .photo-upload-zone img{width:100%;height:100%;object-fit:cover;}
 .photo-upload-zone .upload-icon{font-size:32px;color:#c4c8cf;margin-bottom:4px;}
 .photo-upload-zone .upload-text{font-size:12px;color:var(--text-muted);font-weight:500;}
 .selfie-note{text-align:center;font-size:13px;color:var(--orange);font-weight:600;font-style:italic;margin-bottom:4px;}
-
 .profile-header{text-align:center;margin-bottom:32px;}
 .profile-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid white;box-shadow:0 4px 20px rgba(0,0,0,0.1);margin-bottom:14px;}
 .profile-avatar-placeholder{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--teal));display:flex;align-items:center;justify-content:center;font-size:36px;color:white;font-weight:700;font-family:'Playfair Display',serif;margin:0 auto 14px;}
@@ -94,16 +80,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .profile-tag.orange{background:var(--orange-light);color:var(--orange-dark);}
 .profile-tag.teal{background:var(--teal-light);color:var(--teal-dark);}
 .profile-text{font-size:15px;color:var(--text);line-height:1.6;}
-
-/* Waiting */
 .waiting-illustration{text-align:center;padding:32px 0;}
 .waiting-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--orange-light),var(--teal-light));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px;animation:pulse-glow 2.5s ease-in-out infinite;}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(255,145,73,0.2);}50%{box-shadow:0 0 0 16px rgba(0,151,178,0.05);}}
 .waiting-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;}
 .waiting-text{font-size:14px;color:var(--text-muted);line-height:1.7;max-width:380px;margin:0 auto 20px;}
 .notification-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green);font-size:13px;font-weight:600;padding:8px 16px;border-radius:100px;}
-
-/* Snapshot overlay */
 .snapshot-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s ease;backdrop-filter:blur(4px);}
 .snapshot-overlay.open{opacity:1;pointer-events:all;}
 .snapshot-card{background:white;border-radius:20px;padding:36px 32px;max-width:420px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.2);transform:translateY(20px) scale(0.96);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);max-height:90vh;overflow-y:auto;position:relative;}
@@ -113,16 +95,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .snapshot-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--orange));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:28px;font-family:'Playfair Display',serif;margin:0 auto 16px;overflow:hidden;}
 .snapshot-avatar img{width:100%;height:100%;object-fit:cover;}
 .snapshot-name{text-align:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:16px;}
-
 .smart-prompt{background:linear-gradient(135deg,var(--orange-light),var(--teal-light));border-radius:14px;padding:16px 18px;margin-bottom:20px;border-left:4px solid var(--orange);position:relative;}
 .smart-prompt-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--orange-dark);margin-bottom:6px;}
 .smart-prompt-text{font-size:14px;line-height:1.6;color:var(--text);}
 .smart-prompt-icon{position:absolute;top:12px;right:14px;font-size:18px;opacity:0.5;}
-
 .snapshot-actions{display:flex;gap:12px;margin-top:24px;}
 .snapshot-actions .btn{flex:1;padding:14px;font-size:15px;}
-
-/* DM */
 .dm-panel{margin-top:20px;display:none;}
 .dm-panel.open{display:block;}
 .dm-input-row{display:flex;gap:10px;}
@@ -131,8 +109,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .dm-send{padding:12px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:white;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;font-size:14px;transition:all 0.2s;}
 .dm-send:hover{transform:scale(1.03);}
 .dm-sent-confirmation{display:none;text-align:center;padding:16px;color:var(--green);font-weight:600;font-size:14px;}
-
-/* Match card */
 .match-card{display:flex;align-items:center;gap:16px;padding:18px 20px;background:white;border:1px solid rgba(0,0,0,0.06);border-radius:14px;margin-bottom:12px;box-shadow:0 2px 12px rgba(0,0,0,0.04);cursor:pointer;transition:all 0.3s ease;}
 .match-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
 .match-card.declined{display:none;}
@@ -142,19 +118,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .match-name{font-weight:600;font-size:15px;margin-bottom:2px;}
 .match-reason{font-size:13px;color:var(--text-muted);line-height:1.4;}
 .match-accepted-badge{font-size:11px;font-weight:700;color:var(--green);background:var(--green-light);padding:3px 10px;border-radius:100px;margin-top:4px;display:inline-block;}
-
 .matches-header{text-align:center;margin-bottom:28px;}
 .matches-header h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:6px;}
-
-/* Nav */
 .bottom-nav{display:flex;background:white;border-radius:16px;box-shadow:var(--shadow);padding:6px;margin-top:24px;border:1px solid rgba(0,0,0,0.04);}
 .nav-tab{flex:1;padding:12px;text-align:center;border-radius:12px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-muted);transition:all 0.3s;border:none;background:none;font-family:'DM Sans',sans-serif;}
 .nav-tab:hover{color:var(--text);}
 .nav-tab.active{background:linear-gradient(135deg,var(--orange),var(--teal));color:white;box-shadow:0 2px 12px rgba(255,145,73,0.25);}
 .nav-tab span{display:block;font-size:18px;margin-bottom:2px;}
 .nav-tab .notif-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;margin-left:4px;vertical-align:top;animation:pulse-glow 1.5s ease-in-out infinite;}
-
-/* Break warning modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s ease;backdrop-filter:blur(4px);}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal-card{background:white;border-radius:20px;padding:36px 32px;max-width:400px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.2);transform:translateY(20px) scale(0.96);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);text-align:center;}
@@ -164,11 +135,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .modal-text{font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:20px;}
 .modal-learn-more{font-size:12px;color:var(--teal);cursor:pointer;text-decoration:underline;margin-top:8px;background:none;border:none;font-family:'DM Sans',sans-serif;}
 .modal-learn-more:hover{color:var(--teal-dark);}
-
-/* Edit profile */
 .edit-section{margin-bottom:20px;}
 .edit-section label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-muted);margin-bottom:6px;}
-.edit-section .text-input{margin-bottom:0;}
 .edit-photo-zone{width:100px;height:100px;border-radius:50%;border:3px dashed #d1d5db;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin:0 auto 8px;transition:all 0.3s;overflow:hidden;background:#f9fafb;}
 .edit-photo-zone:hover{border-color:var(--orange);background:var(--orange-light);}
 .edit-photo-zone img{width:100%;height:100%;object-fit:cover;}
@@ -176,23 +144,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .edit-chip{padding:8px 14px;border:2px solid #e5e7eb;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;background:white;user-select:none;}
 .edit-chip:hover{border-color:var(--teal);background:var(--teal-light);}
 .edit-chip.selected{border-color:var(--teal);background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:white;}
-
+.error-text{color:var(--red);font-size:13px;margin-top:8px;font-weight:500;display:none;}
+.divider{border:none;border-top:1px solid #e5e7eb;margin:24px 0;}
+.login-link{font-size:14px;color:var(--text-muted);text-align:center;margin-top:16px;}
+.login-link a{color:var(--teal);cursor:pointer;font-weight:600;text-decoration:none;}
+.login-link a:hover{text-decoration:underline;}
+.password-strength{height:4px;border-radius:4px;background:#e5e7eb;margin-top:8px;overflow:hidden;}
+.password-strength-bar{height:100%;border-radius:4px;transition:width 0.3s,background 0.3s;width:0%;}
 .screen{display:none;}.screen.active{display:block;}
-
 .loading-spinner{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;text-align:center;}
 .spinner-ring{width:56px;height:56px;border:4px solid #e5e7eb;border-top-color:var(--orange);border-right-color:var(--teal);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-text{font-weight:600;margin-bottom:4px;}
 .loading-sub{font-size:13px;color:var(--text-muted);}
-
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .animate-in{animation:fadeInUp 0.5s ease forwards;}
+.profile-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
 </style>
 </head>
 <body>
-
 <div class="bg-decoration"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
-
 <div class="app-container">
   <div class="progress-wrapper" id="progressWrapper" style="display:none;">
     <div class="progress-steps" id="progressSteps"></div>
@@ -208,6 +179,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <p>Let's complete some questions so we can connect you with the right people.</p>
       </div>
       <button class="btn btn-primary" style="width:100%;" onclick="navigate('name')">Let's Get Started →</button>
+      <div class="login-link" style="margin-top:20px;">Already have an account? <a onclick="navigate('login')">Log In</a></div>
+    </div>
+  </div>
+
+  <!-- Login -->
+  <div class="screen" id="screen-login">
+    <div class="card animate-in">
+      <div class="welcome-header" style="margin-bottom:24px;">
+        <div class="welcome-logo"><div class="logo-icon">N</div><div class="logo-text">NetX</div></div>
+        <h1>Welcome Back</h1>
+        <p>Log in to see your matches and messages.</p>
+      </div>
+      <div class="edit-section">
+        <label>Email</label>
+        <input type="email" class="text-input" id="loginEmail" placeholder="you@example.com" data-enter-target="btnLogin">
+      </div>
+      <div class="edit-section">
+        <label>Password</label>
+        <input type="password" class="text-input" id="loginPassword" placeholder="Enter your password" data-enter-target="btnLogin">
+      </div>
+      <div class="error-text" id="loginError"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:16px;" id="btnLogin" onclick="doLogin()">Log In →</button>
+      <div class="login-link">Don't have an account? <a onclick="navigate('welcome')">Sign Up</a></div>
     </div>
   </div>
 
@@ -231,6 +225,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="question-label">What's your email?</div>
       <div class="question-hint">We'll notify you when you get a match — no spam, ever.</div>
       <input type="email" class="text-input" id="inputEmail" placeholder="you@example.com" data-enter-target="btnEmail">
+      <div class="error-text" id="emailExistsError">An account with this email already exists. <a style="color:var(--teal);cursor:pointer;text-decoration:underline;" onclick="navigate('login')">Log in instead?</a></div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="navigate('name')">← Back</button>
         <button class="btn btn-primary" onclick="saveAndNav('email','career')" id="btnEmail" disabled>Continue →</button>
@@ -315,9 +310,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <button class="btn btn-secondary" onclick="navigate('interests')">← Back</button>
         <button class="btn btn-teal" onclick="saveAndNav('passion','photo')" id="btnPassionContinue">Continue →</button>
       </div>
-      <div style="text-align:center;">
-        <button class="skip-btn" onclick="state.passion='';navigate('photo')">Skip this question</button>
-      </div>
+      <div style="text-align:center;"><button class="skip-btn" onclick="state.passion='';navigate('photo')">Skip this question</button></div>
     </div>
   </div>
 
@@ -335,7 +328,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <input type="file" id="photoInput" accept="image/*" style="display:none;">
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="navigate('passion')">← Back</button>
-        <button class="btn btn-primary" onclick="completeProfile()" style="flex:2;">Complete My Profile ✓</button>
+        <button class="btn btn-primary" onclick="navigate('setpassword')" style="flex:2;">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Set Password (final step) -->
+  <div class="screen" id="screen-setpassword">
+    <div class="card animate-in">
+      <span class="section-tag about">One Last Thing</span>
+      <div class="question-label">Add a password to finalize your profile</div>
+      <div class="question-hint">This secures your account so you can log back in anytime.</div>
+      <div class="edit-section">
+        <label>Password</label>
+        <input type="password" class="text-input" id="inputPassword" placeholder="Create a password (min 6 characters)" data-enter-target="btnSetPassword">
+        <div class="password-strength"><div class="password-strength-bar" id="pwStrengthBar"></div></div>
+      </div>
+      <div class="edit-section">
+        <label>Confirm Password</label>
+        <input type="password" class="text-input" id="inputPasswordConfirm" placeholder="Confirm your password" data-enter-target="btnSetPassword">
+      </div>
+      <div class="error-text" id="passwordError"></div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="navigate('photo')">← Back</button>
+        <button class="btn btn-primary" onclick="completeProfile()" id="btnSetPassword" disabled style="flex:2;">Complete My Profile ✓</button>
       </div>
     </div>
   </div>
@@ -368,8 +384,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <!-- Break warning modal -->
-<div class="modal-overlay" id="breakModal" onclick="closeBreakModalOutside(event)">
-  <div class="modal-card" id="breakModalCard">
+<div class="modal-overlay" id="breakModal" onclick="if(event.target===this)closeBreakModal()">
+  <div class="modal-card">
     <div class="modal-icon">⚡</div>
     <div class="modal-title">You sure you want this many conversations at once?</div>
     <div class="modal-text">Balancing multiple connections takes effort. Make sure you have the bandwidth!</div>
@@ -382,8 +398,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <!-- Learn More modal -->
-<div class="modal-overlay" id="learnMoreModal" onclick="closeLearnMoreOutside(event)">
-  <div class="modal-card" id="learnMoreCard">
+<div class="modal-overlay" id="learnMoreModal" onclick="if(event.target===this)closeLearnMore()">
+  <div class="modal-card">
     <div class="modal-icon">📖</div>
     <div class="modal-title">Our Philosophy</div>
     <div class="modal-text" style="text-align:left;">
@@ -397,725 +413,487 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
+<!-- Delete confirm modal -->
+<div class="modal-overlay" id="deleteModal" onclick="if(event.target===this)closeDeleteModal()">
+  <div class="modal-card">
+    <div class="modal-icon">🗑️</div>
+    <div class="modal-title">Delete Your Profile?</div>
+    <div class="modal-text">This action is permanent. Your profile, matches, and messages will be removed from NetX entirely.</div>
+    <div class="edit-section" style="margin-bottom:0;">
+      <label>Type your email to confirm</label>
+      <input type="text" class="text-input" id="deleteConfirmEmail" placeholder="you@example.com">
+    </div>
+    <div class="btn-row" style="margin-top:20px;">
+      <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDeleteProfile()" style="flex:1;">Delete Forever</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ─── State ───
-const state = {
-  name:'', email:'', career:'', focus:'', connections:[],
-  interests:[], passion:'', photoData:null, id:null,
-};
+const state = { name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null };
+let currentUserMatches=[], acceptedUsers={}, declinedUsers={}, messages=[], pendingAcceptIdx=null, currentScreen='welcome';
 
-let currentUserMatches = [];
-let acceptedUsers = {};
-let declinedUsers = {};
-let messages = [];
-let pendingAcceptIdx = null;
-let currentScreen = 'welcome';
+// ─── Password hashing (simple but secure for MVP — SHA-256) ───
+async function hashPassword(pw) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(pw + 'netx_salt_2026');
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
 
-// ─── Persistent storage helpers ───
+// ─── Storage ───
 async function loadAllUsers() {
-  try {
-    const result = await window.storage.get('netx-all-users');
-    return result ? JSON.parse(result.value) : [];
-  } catch { return []; }
+  try { const r = await window.storage.get('netx-users'); return r ? JSON.parse(r.value) : []; }
+  catch { return []; }
 }
-
 async function saveAllUsers(users) {
-  try {
-    await window.storage.set('netx-all-users', JSON.stringify(users));
-  } catch (e) { console.error('Storage save error:', e); }
+  try { await window.storage.set('netx-users', JSON.stringify(users)); } catch(e) { console.error('Save error:',e); }
 }
-
-async function loadUserSession() {
-  try {
-    const result = await window.storage.get('netx-current-session');
-    return result ? JSON.parse(result.value) : null;
-  } catch { return null; }
+async function loadSession() {
+  try { const r = await window.storage.get('netx-session'); return r ? JSON.parse(r.value) : null; }
+  catch { return null; }
 }
-
-async function saveUserSession(data) {
-  try {
-    await window.storage.set('netx-current-session', JSON.stringify(data));
-  } catch (e) { console.error('Session save error:', e); }
+async function saveSession(data) {
+  try { await window.storage.set('netx-session', JSON.stringify(data)); } catch(e) { console.error('Session error:',e); }
+}
+async function clearSession() {
+  try { await window.storage.delete('netx-session'); } catch(e) {} 
 }
 
 // ─── Interest taxonomy ───
-const interestClusters = {
-  sports:['basketball','nba','football','soccer','mma','boxing','running','cycling','sports','golf','baseball','tennis','swimming','volleyball','hockey','wrestling','rugby','cricket','skiing','snowboarding','skateboarding','surfing','fitness','gym','crossfit','weightlifting'],
-  music:['music','music production','hip hop','jazz','rock','concerts','vinyl records','piano','guitar','singing','dj','edm','r&b','country','classical','blues','reggae','pop'],
-  outdoors:['hiking','camping','rock climbing','travel','gardening','bird watching','fishing','kayaking','surfing','backpacking','trail running'],
-  creative:['photography','drawing','painting','street art','writing','manga','anime','design','pottery','crafts','woodworking','knitting'],
-  gaming:['gaming','video games','streaming','esports','board games','card games','dungeons and dragons','chess'],
-  food:['cooking','baking','wine tasting','coffee','nutrition','food','restaurants','grilling','mixology'],
-  wellness:['yoga','meditation','fitness','nutrition','mindfulness','self-improvement'],
-  tech:['coding','tech gadgets','3d printing','robotics','ai','vr','crypto'],
-  pets:['dogs','cats','pets','horses','aquariums'],
-  reading:['reading','books','podcasts','audiobooks','comics']
-};
+const interestClusters={sports:['basketball','nba','football','soccer','mma','boxing','running','cycling','sports','golf','baseball','tennis','swimming','volleyball','hockey','wrestling','rugby','cricket','skiing','snowboarding','skateboarding','surfing','fitness','gym','crossfit','weightlifting'],music:['music','music production','hip hop','jazz','rock','concerts','vinyl records','piano','guitar','singing','dj','edm','r&b','country','classical','blues','reggae','pop'],outdoors:['hiking','camping','rock climbing','travel','gardening','bird watching','fishing','kayaking','surfing','backpacking','trail running'],creative:['photography','drawing','painting','street art','writing','manga','anime','design','pottery','crafts','woodworking','knitting'],gaming:['gaming','video games','streaming','esports','board games','card games','dungeons and dragons','chess'],food:['cooking','baking','wine tasting','coffee','nutrition','food','restaurants','grilling','mixology'],wellness:['yoga','meditation','fitness','nutrition','mindfulness','self-improvement'],tech:['coding','tech gadgets','3d printing','robotics','ai','vr','crypto'],pets:['dogs','cats','pets','horses','aquariums'],reading:['reading','books','podcasts','audiobooks','comics']};
+function getCluster(i){const l=i.toLowerCase().trim();for(const[c,kw]of Object.entries(interestClusters)){if(kw.includes(l))return c;}return null;}
+function getClusters(arr){const s=new Set();arr.forEach(i=>{const c=getCluster(i);if(c)s.add(c);});return s;}
 
-function getCluster(interest) {
-  const lower = interest.toLowerCase().trim();
-  for (const [cluster, keywords] of Object.entries(interestClusters)) {
-    if (keywords.includes(lower)) return cluster;
-  }
-  return null;
-}
-function getClusters(interests) {
-  const s = new Set();
-  interests.forEach(i => { const c = getCluster(i); if(c) s.add(c); });
-  return s;
-}
-
-// ─── Matching algorithm ───
-function computeMatches(user, pool) {
-  const userInterests = user.interests.map(i => i.toLowerCase().trim());
-  const userClusters = getClusters(userInterests);
-  const userPassion = user.passion ? user.passion.toLowerCase().trim() : '';
-  const passionCluster = getCluster(userPassion);
-
-  return pool.filter(c => c.id !== user.id).map(candidate => {
-    let score = 0, reasons = [];
-    const candInterests = candidate.interests.map(i => i.toLowerCase().trim());
-    const candClusters = getClusters(candInterests);
-
-    const directMatches = userInterests.filter(i => candInterests.includes(i));
-    score += directMatches.length * 30;
-    if (directMatches.length > 0) reasons.push(`You both love ${directMatches.slice(0,2).join(' & ')}`);
-
-    if (userPassion && candInterests.includes(userPassion)) {
-      score += 25;
-      if (!directMatches.includes(userPassion)) reasons.push(`Shares your passion for ${userPassion}`);
+// ─── Matching ───
+function computeMatches(user,pool){
+  const ui=user.interests.map(i=>i.toLowerCase().trim()),uc=getClusters(ui);
+  const up=user.passion?user.passion.toLowerCase().trim():'',pc=getCluster(up);
+  return pool.filter(c=>c.id!==user.id).map(cand=>{
+    let score=0,reasons=[];
+    const ci=cand.interests.map(i=>i.toLowerCase().trim()),cc=getClusters(ci);
+    const dm=ui.filter(i=>ci.includes(i));
+    score+=dm.length*30;
+    if(dm.length>0)reasons.push(`You both love ${dm.slice(0,2).join(' & ')}`);
+    if(up&&ci.includes(up)){score+=25;if(!dm.includes(up))reasons.push(`Shares your passion for ${up}`);}
+    const co=[...uc].filter(c=>cc.has(c));
+    score+=co.length*18;
+    if(reasons.length===0&&co.length>0){
+      const cn=co[0],ti=ci.find(i=>getCluster(i)===cn)||cn,yi=ui.find(i=>getCluster(i)===cn)||cn;
+      reasons.push(ti!==yi?`You like ${yi}, they like ${ti}`:`Similar interests in ${cn}`);
     }
-
-    const clusterOverlap = [...userClusters].filter(c => candClusters.has(c));
-    score += clusterOverlap.length * 18;
-    if (reasons.length === 0 && clusterOverlap.length > 0) {
-      const clusterName = clusterOverlap[0];
-      const theirInterest = candInterests.find(i => getCluster(i) === clusterName) || clusterName;
-      const yourInterest = userInterests.find(i => getCluster(i) === clusterName) || clusterName;
-      if (theirInterest !== yourInterest) {
-        reasons.push(`You like ${yourInterest}, they like ${theirInterest}`);
-      } else {
-        reasons.push(`Similar interests in ${clusterName}`);
-      }
-    }
-
-    if (passionCluster && candClusters.has(passionCluster)) score += 15;
-
-    const connectionOverlap = user.connections.filter(c => candidate.connections.includes(c));
-    score += connectionOverlap.length * 8;
-    if (reasons.length === 0 && connectionOverlap.length > 0) reasons.push(`Both looking for ${connectionOverlap[0].toLowerCase()}`);
-
-    if (user.career === candidate.career) score += 3;
-
-    const careerOrder = ['Student','Early Career','Mid Career','Late Career'];
-    const uI = careerOrder.indexOf(user.career);
-    const cI = careerOrder.indexOf(candidate.career);
-    if (user.connections.includes('Mentorship') && candidate.connections.includes('Mentorship') && Math.abs(uI-cI)>=2) {
-      score += 10;
-      reasons.push('Great mentorship pairing');
-    }
-
-    return { ...candidate, score: Math.min(score,99), reasons: reasons.length ? reasons : ['Part of the NetX community'] };
-  }).sort((a,b) => b.score - a.score).slice(0, 5); // TOP 5 ONLY
+    if(pc&&cc.has(pc))score+=15;
+    const go=user.connections.filter(c=>cand.connections.includes(c));
+    score+=go.length*8;
+    if(reasons.length===0&&go.length>0)reasons.push(`Both looking for ${go[0].toLowerCase()}`);
+    if(user.career===cand.career)score+=3;
+    const co2=['Student','Early Career','Mid Career','Late Career'],uI=co2.indexOf(user.career),cI=co2.indexOf(cand.career);
+    if(user.connections.includes('Mentorship')&&cand.connections.includes('Mentorship')&&Math.abs(uI-cI)>=2){score+=10;reasons.push('Great mentorship pairing');}
+    return{...cand,score:Math.min(score,99),reasons:reasons.length?reasons:['Part of the NetX community']};
+  }).sort((a,b)=>b.score-a.score).slice(0,5);
 }
 
-// ─── Smart prompt generator ───
-function generateSmartPrompt(user, match) {
-  const userInterests = user.interests.map(i => i.toLowerCase().trim());
-  const matchInterests = match.interests.map(i => i.toLowerCase().trim());
-
-  const direct = userInterests.filter(i => matchInterests.includes(i));
-  if (direct.length > 0) {
-    const shared = direct[0];
-    const prompts = [
-      `You both enjoy ${shared} — ask them what got them into it!`,
-      `${shared} is a shared interest. What's their favorite thing about it?`,
-      `Since you both like ${shared}, ask them for a recommendation!`,
-    ];
-    return prompts[Math.floor(Math.random() * prompts.length)];
-  }
-
-  const userClusters = getClusters(userInterests);
-  const matchClusters = getClusters(matchInterests);
-  const sharedClusters = [...userClusters].filter(c => matchClusters.has(c));
-
-  if (sharedClusters.length > 0) {
-    const cluster = sharedClusters[0];
-    const theirInterest = matchInterests.find(i => getCluster(i) === cluster) || cluster;
-    const yourInterest = userInterests.find(i => getCluster(i) === cluster) || cluster;
-    return `You're into ${yourInterest} and they're into ${theirInterest} — maybe ask them what's their favorite part about it?`;
-  }
-
-  const sharedGoals = user.connections.filter(c => match.connections.includes(c));
-  if (sharedGoals.length > 0) {
-    return `You're both looking for ${sharedGoals[0].toLowerCase()}. Start by sharing what you're currently working on!`;
-  }
-
-  return `Start by asking what they're most excited about right now — you might find unexpected common ground!`;
+// ─── Smart prompt ───
+function generateSmartPrompt(user,match){
+  const ui=user.interests.map(i=>i.toLowerCase().trim()),mi=match.interests.map(i=>i.toLowerCase().trim());
+  const d=ui.filter(i=>mi.includes(i));
+  if(d.length>0){const s=d[0];const p=[`You both enjoy ${s} — ask them what got them into it!`,`${s} is a shared interest. What's their favorite thing about it?`,`Since you both like ${s}, ask them for a recommendation!`];return p[Math.floor(Math.random()*p.length)];}
+  const uc=getClusters(ui),mc=getClusters(mi),sc=[...uc].filter(c=>mc.has(c));
+  if(sc.length>0){const c=sc[0],ti=mi.find(i=>getCluster(i)===c)||c,yi=ui.find(i=>getCluster(i)===c)||c;return`You're into ${yi} and they're into ${ti} — maybe ask them what's their favorite part about it?`;}
+  const sg=user.connections.filter(c=>match.connections.includes(c));
+  if(sg.length>0)return`You're both looking for ${sg[0].toLowerCase()}. Start by sharing what you're currently working on!`;
+  return`Start by asking what they're most excited about right now — you might find unexpected common ground!`;
 }
 
-// ─── Notification system ───
-function sendNotificationEmail(email, matchName) {
-  console.log(`%c[NetX Email Notification]%c → To: ${email} | Subject: "You matched with ${matchName} on NetX!"`, 'color:#ff9149;font-weight:bold', 'color:inherit');
-  console.log(`  📧 Email body: "Hey! Great news — ${matchName} accepted your connection on NetX. Log in to start chatting!"`);
-  // Production: POST /api/notify { email, matchName, type:'match_accepted' }
-}
+// ─── Notifications ───
+function sendNotificationEmail(email,matchName){console.log(`%c[NetX Email]%c → To: ${email} | "You matched with ${matchName} on NetX!"`,'color:#ff9149;font-weight:bold','color:inherit');}
+function sendDMNotificationEmail(email,sender,preview){console.log(`%c[NetX DM Email]%c → To: ${email} | From: ${sender} | "${preview.slice(0,60)}"`,'color:#0097b2;font-weight:bold','color:inherit');}
 
-function sendDMNotificationEmail(email, senderName, preview) {
-  console.log(`%c[NetX Email Notification]%c → To: ${email} | Subject: "New message from ${senderName}"`, 'color:#0097b2;font-weight:bold', 'color:inherit');
-  console.log(`  💬 Preview: "${preview.slice(0,80)}..."`);
-  // Production: POST /api/notify { email, senderName, preview, type:'dm' }
-}
-
-// ─── History API ───
-const stepLabels = { name:'Your Name', email:'Your Email', career:'Career Status', focus:'Your Focus', connections:'Connection Goals', interests:'Your Interests', passion:'Your Passions', photo:'Profile Photo' };
-
-function navigate(screen, pushState = true) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const el = document.getElementById('screen-' + screen);
-  if (!el) return;
+// ─── Navigation (History API) ───
+const stepLabels={name:'Your Name',email:'Your Email',career:'Career Status',focus:'Your Focus',connections:'Connection Goals',interests:'Your Interests',passion:'Your Passions',photo:'Profile Photo',setpassword:'Set Password'};
+function navigate(screen,push=true){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById('screen-'+screen);
+  if(!el)return;
   el.classList.add('active');
   el.querySelector('.card,.loading-spinner')?.classList.add('animate-in');
-  currentScreen = screen;
+  currentScreen=screen;
   updateProgress();
-  if (pushState) history.pushState({ screen }, '', '#' + screen);
+  if(push)history.pushState({screen},'','#'+screen);
 }
+window.addEventListener('popstate',e=>{if(e.state&&e.state.screen)navigate(e.state.screen,false);});
+history.replaceState({screen:'welcome'},'','#welcome');
 
-window.addEventListener('popstate', e => {
-  if (e.state && e.state.screen) navigate(e.state.screen, false);
-});
-history.replaceState({ screen:'welcome' }, '', '#welcome');
-
-function updateProgress() {
-  const surveyScreens = ['name','email','career','focus','connections','interests','passion','photo'];
-  const idx = surveyScreens.indexOf(currentScreen);
-  if (idx < 0) { document.getElementById('progressWrapper').style.display='none'; return; }
-  document.getElementById('progressWrapper').style.display = 'block';
-  const total = surveyScreens.length;
-  document.getElementById('progressLabel').textContent = `Step ${idx+1} of ${total} — ${stepLabels[currentScreen]||''}`;
-  let html = '';
-  for (let i=0;i<total;i++) html += `<div class="progress-step ${i<=idx?'active':''}"></div>`;
-  document.getElementById('progressSteps').innerHTML = html;
+function updateProgress(){
+  const ss=['name','email','career','focus','connections','interests','passion','photo','setpassword'];
+  const idx=ss.indexOf(currentScreen);
+  if(idx<0){document.getElementById('progressWrapper').style.display='none';return;}
+  document.getElementById('progressWrapper').style.display='block';
+  document.getElementById('progressLabel').textContent=`Step ${idx+1} of ${ss.length} — ${stepLabels[currentScreen]||''}`;
+  let h='';for(let i=0;i<ss.length;i++)h+=`<div class="progress-step ${i<=idx?'active':''}"></div>`;
+  document.getElementById('progressSteps').innerHTML=h;
 }
 
 // ─── Save & navigate ───
-function saveAndNav(from, to) {
-  if (from==='name') state.name = document.getElementById('inputName').value.trim();
-  if (from==='email') state.email = document.getElementById('inputEmail').value.trim();
-  if (from==='focus') state.focus = document.getElementById('inputFocus').value.trim();
-  if (from==='interests') state.interests = document.getElementById('inputInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
-  if (from==='passion') state.passion = document.getElementById('inputPassion').value.trim();
+function saveAndNav(from,to){
+  if(from==='name')state.name=document.getElementById('inputName').value.trim();
+  if(from==='email'){
+    state.email=document.getElementById('inputEmail').value.trim();
+    // Check if email already exists
+    checkEmailExists(state.email).then(exists=>{
+      if(exists){
+        document.getElementById('emailExistsError').style.display='block';
+        return;
+      }
+      document.getElementById('emailExistsError').style.display='none';
+      navigate(to);
+    });
+    return;
+  }
+  if(from==='focus')state.focus=document.getElementById('inputFocus').value.trim();
+  if(from==='interests')state.interests=document.getElementById('inputInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(from==='passion')state.passion=document.getElementById('inputPassion').value.trim();
   navigate(to);
 }
 
-// ─── ENTER key support ───
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
+async function checkEmailExists(email){
+  const users=await loadAllUsers();
+  return users.some(u=>u.email.toLowerCase()===email.toLowerCase());
+}
 
-  // DM input — send message
-  const activeDM = document.querySelector('.dm-input:focus');
-  if (activeDM) {
-    e.preventDefault();
-    const idx = activeDM.id.replace('dmInput-','');
-    sendDM(parseInt(idx));
-    return;
-  }
-
-  // Survey text inputs — click associated button
-  const focused = document.activeElement;
-  if (focused && focused.dataset.enterTarget) {
-    // For textareas, only trigger on Enter without Shift (Shift+Enter = newline)
-    if (focused.tagName === 'TEXTAREA' && !e.shiftKey) {
-      e.preventDefault();
-      const btn = document.getElementById(focused.dataset.enterTarget);
-      if (btn && !btn.disabled) btn.click();
-    } else if (focused.tagName === 'INPUT') {
-      e.preventDefault();
-      const btn = document.getElementById(focused.dataset.enterTarget);
-      if (btn && !btn.disabled) btn.click();
-    }
+// ─── Enter key ───
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const dm=document.querySelector('.dm-input:focus');
+  if(dm){e.preventDefault();sendDM(parseInt(dm.id.replace('dmInput-','')));return;}
+  const f=document.activeElement;
+  if(f&&f.dataset.enterTarget){
+    if(f.tagName==='TEXTAREA'&&!e.shiftKey){e.preventDefault();const b=document.getElementById(f.dataset.enterTarget);if(b&&!b.disabled)b.click();}
+    else if(f.tagName==='INPUT'){e.preventDefault();const b=document.getElementById(f.dataset.enterTarget);if(b&&!b.disabled)b.click();}
   }
 });
 
-// ─── Chip setup ───
-function setupChips(containerId, multi, stateKey, btnId) {
-  document.getElementById(containerId).querySelectorAll('.option-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const container = document.getElementById(containerId);
-      if (multi) {
-        chip.classList.toggle('selected');
-        state[stateKey] = [...container.querySelectorAll('.option-chip.selected')].map(c=>c.dataset.value);
-      } else {
-        container.querySelectorAll('.option-chip').forEach(c=>c.classList.remove('selected'));
-        chip.classList.add('selected');
-        state[stateKey] = chip.dataset.value;
-      }
-      document.getElementById(btnId).disabled = multi ? state[stateKey].length===0 : !state[stateKey];
+// ─── Chips ───
+function setupChips(cid,multi,sk,bid){
+  document.getElementById(cid).querySelectorAll('.option-chip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const cont=document.getElementById(cid);
+      if(multi){chip.classList.toggle('selected');state[sk]=[...cont.querySelectorAll('.option-chip.selected')].map(c=>c.dataset.value);}
+      else{cont.querySelectorAll('.option-chip').forEach(c=>c.classList.remove('selected'));chip.classList.add('selected');state[sk]=chip.dataset.value;}
+      document.getElementById(bid).disabled=multi?state[sk].length===0:!state[sk];
     });
   });
 }
-setupChips('careerOptions', false, 'career', 'btnCareer');
-setupChips('connectionOptions', true, 'connections', 'btnConnections');
+setupChips('careerOptions',false,'career','btnCareer');
+setupChips('connectionOptions',true,'connections','btnConnections');
 
-// ─── Input validation ───
-document.getElementById('inputName').addEventListener('input', e => {
-  document.getElementById('btnName').disabled = !e.target.value.trim();
+// ─── Validation ───
+document.getElementById('inputName').addEventListener('input',e=>{document.getElementById('btnName').disabled=!e.target.value.trim();});
+document.getElementById('inputEmail').addEventListener('input',e=>{
+  const v=e.target.value.trim();
+  document.getElementById('btnEmail').disabled=!v||!v.includes('@')||!v.includes('.');
+  document.getElementById('emailExistsError').style.display='none';
 });
-document.getElementById('inputEmail').addEventListener('input', e => {
-  const v = e.target.value.trim();
-  document.getElementById('btnEmail').disabled = !v || !v.includes('@') || !v.includes('.');
+document.getElementById('inputFocus').addEventListener('input',e=>{document.getElementById('btnFocus').disabled=!e.target.value.trim();});
+document.getElementById('inputInterests').addEventListener('input',e=>{document.getElementById('btnInterests').disabled=!e.target.value.trim();});
+
+// ─── Password validation ───
+function validatePasswords(){
+  const pw=document.getElementById('inputPassword').value;
+  const pc=document.getElementById('inputPasswordConfirm').value;
+  const err=document.getElementById('passwordError');
+  if(pw.length<6){err.textContent='Password must be at least 6 characters.';err.style.display='block';document.getElementById('btnSetPassword').disabled=true;return false;}
+  if(pw!==pc){err.textContent='Passwords do not match.';err.style.display='block';document.getElementById('btnSetPassword').disabled=true;return false;}
+  err.style.display='none';
+  document.getElementById('btnSetPassword').disabled=false;
+  return true;
+}
+document.getElementById('inputPassword').addEventListener('input',e=>{
+  validatePasswords();
+  // Strength bar
+  const pw=e.target.value;
+  const bar=document.getElementById('pwStrengthBar');
+  let strength=0;
+  if(pw.length>=6)strength++;if(pw.length>=10)strength++;if(/[A-Z]/.test(pw))strength++;if(/[0-9]/.test(pw))strength++;if(/[^a-zA-Z0-9]/.test(pw))strength++;
+  const pct=Math.min(strength/4*100,100);
+  const colors=['#ef4444','#f59e0b','#f59e0b','#10b981','#10b981'];
+  bar.style.width=pct+'%';
+  bar.style.background=colors[Math.min(strength,4)];
 });
-document.getElementById('inputFocus').addEventListener('input', e => {
-  document.getElementById('btnFocus').disabled = !e.target.value.trim();
-});
-document.getElementById('inputInterests').addEventListener('input', e => {
-  document.getElementById('btnInterests').disabled = !e.target.value.trim();
+document.getElementById('inputPasswordConfirm').addEventListener('input',validatePasswords);
+
+// ─── Photo ───
+document.getElementById('photoInput').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{state.photoData=r.result;document.getElementById('photoZone').innerHTML=`<img src="${r.result}" alt="Profile photo">`;};
+  r.readAsDataURL(f);
 });
 
-// ─── Photo upload ───
-document.getElementById('photoInput').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    state.photoData = reader.result;
-    document.getElementById('photoZone').innerHTML = `<img src="${reader.result}" alt="Profile photo">`;
-  };
-  reader.readAsDataURL(file);
-});
+// ─── Complete profile (create account) ───
+async function completeProfile(){
+  if(!validatePasswords())return;
+  const pw=document.getElementById('inputPassword').value;
+  const pwHash=await hashPassword(pw);
 
-// ─── Complete profile ───
-async function completeProfile() {
   navigate('loading');
-  const msgs = [
-    ['Building your profile...','Setting everything up'],
-    ['Scanning for matches...','Looking through the community'],
-    ['Almost ready!','Finalizing your experience'],
-  ];
-  let step = 0;
-  const iv = setInterval(() => {
-    step++;
-    if (step < msgs.length) {
-      document.getElementById('loadingText').textContent = msgs[step][0];
-      document.getElementById('loadingSub').textContent = msgs[step][1];
-    }
-  }, 800);
+  const msgs=[['Building your profile...','Setting everything up'],['Securing your account...','Encrypting credentials'],['Almost ready!','Finalizing your experience']];
+  let step=0;
+  const iv=setInterval(()=>{step++;if(step<msgs.length){document.getElementById('loadingText').textContent=msgs[step][0];document.getElementById('loadingSub').textContent=msgs[step][1];}},800);
 
-  // Register user
-  state.id = 'user_' + Date.now();
-  const allUsers = await loadAllUsers();
-  allUsers.push({ ...state });
+  state.id='user_'+Date.now();
+  const userData={...state, passwordHash:pwHash, acceptedUsers:{}, declinedUsers:{}, messages:[]};
+
+  const allUsers=await loadAllUsers();
+  allUsers.push(userData);
   await saveAllUsers(allUsers);
-  await saveUserSession({ id: state.id, acceptedUsers, declinedUsers, messages });
+  await saveSession({id:state.id,email:state.email});
 
-  setTimeout(async () => {
+  acceptedUsers={};declinedUsers={};messages=[];
+
+  setTimeout(async()=>{
     clearInterval(iv);
-    const pool = await loadAllUsers();
-    currentUserMatches = computeMatches(state, pool);
-
-    // Notify via email if matches exist
-    if (currentUserMatches.length > 0) {
-      currentUserMatches.forEach(m => {
-        sendNotificationEmail(state.email, m.name);
-      });
-    }
-
+    const pool=await loadAllUsers();
+    currentUserMatches=computeMatches(state,pool);
+    if(currentUserMatches.length>0)currentUserMatches.forEach(m=>sendNotificationEmail(state.email,m.name));
     renderDashboard();
     navigate('dashboard');
-  }, 2500);
+  },2500);
 }
 
-// ─── Recompute matches (for after profile edit) ───
-async function recomputeMatches() {
-  const pool = await loadAllUsers();
-  currentUserMatches = computeMatches(state, pool);
-  // Reset accepted/declined since matches may have changed
-  acceptedUsers = {};
-  declinedUsers = {};
-  await saveUserSession({ id: state.id, acceptedUsers, declinedUsers, messages });
+// ─── Login ───
+async function doLogin(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const pw=document.getElementById('loginPassword').value;
+  const err=document.getElementById('loginError');
+  if(!email||!pw){err.textContent='Please enter both email and password.';err.style.display='block';return;}
+  const pwHash=await hashPassword(pw);
+  const allUsers=await loadAllUsers();
+  const user=allUsers.find(u=>u.email.toLowerCase()===email.toLowerCase()&&u.passwordHash===pwHash);
+  if(!user){err.textContent='Invalid email or password.';err.style.display='block';return;}
+  err.style.display='none';
+
+  // Load user into state
+  Object.assign(state,{name:user.name,email:user.email,career:user.career,focus:user.focus,connections:user.connections,interests:user.interests,passion:user.passion,photoData:user.photoData,id:user.id});
+  acceptedUsers=user.acceptedUsers||{};
+  declinedUsers=user.declinedUsers||{};
+  messages=user.messages||[];
+
+  await saveSession({id:state.id,email:state.email});
+
+  const pool=await loadAllUsers();
+  currentUserMatches=computeMatches(state,pool);
+  renderDashboard();
+  navigate('dashboard');
+}
+
+// ─── Logout ───
+async function doLogout(){
+  await persistUserData();
+  await clearSession();
+  Object.assign(state,{name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null});
+  acceptedUsers={};declinedUsers={};messages=[];currentUserMatches=[];
+  // Reset form fields
+  document.getElementById('inputName').value='';
+  document.getElementById('inputEmail').value='';
+  document.getElementById('inputFocus').value='';
+  document.getElementById('inputInterests').value='';
+  document.getElementById('inputPassion').value='';
+  document.getElementById('inputPassword').value='';
+  document.getElementById('inputPasswordConfirm').value='';
+  document.getElementById('loginEmail').value='';
+  document.getElementById('loginPassword').value='';
+  document.getElementById('photoZone').innerHTML='<div class="upload-icon">📷</div><div class="upload-text">Tap to upload</div>';
+  document.querySelectorAll('.option-chip.selected').forEach(c=>c.classList.remove('selected'));
+  ['btnName','btnEmail','btnCareer','btnFocus','btnConnections','btnInterests','btnSetPassword'].forEach(id=>{const b=document.getElementById(id);if(b)b.disabled=true;});
+  navigate('welcome');
+}
+
+// ─── Persist user data (accepted, declined, messages) ───
+async function persistUserData(){
+  if(!state.id)return;
+  const allUsers=await loadAllUsers();
+  const idx=allUsers.findIndex(u=>u.id===state.id);
+  if(idx>=0){
+    allUsers[idx]={...allUsers[idx],...state,acceptedUsers,declinedUsers,messages};
+    await saveAllUsers(allUsers);
+  }
+}
+
+// ─── Delete profile ───
+function openDeleteModal(){document.getElementById('deleteModal').classList.add('open');document.getElementById('deleteConfirmEmail').value='';}
+function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');}
+async function confirmDeleteProfile(){
+  const confirmEmail=document.getElementById('deleteConfirmEmail').value.trim();
+  if(confirmEmail.toLowerCase()!==state.email.toLowerCase()){alert('Email does not match. Please type your email to confirm deletion.');return;}
+  const allUsers=await loadAllUsers();
+  const filtered=allUsers.filter(u=>u.id!==state.id);
+  await saveAllUsers(filtered);
+  await clearSession();
+  closeDeleteModal();
+  closeSnapshot();
+  Object.assign(state,{name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null});
+  acceptedUsers={};declinedUsers={};messages=[];currentUserMatches=[];
+  navigate('welcome');
+}
+
+// ─── Recompute matches ───
+async function recomputeMatches(){
+  const pool=await loadAllUsers();
+  currentUserMatches=computeMatches(state,pool);
+  acceptedUsers={};declinedUsers={};
+  await persistUserData();
 }
 
 // ─── Render Dashboard ───
-function renderDashboard() {
-  const container = document.getElementById('dashboardContent');
-  const statusColors = {
-    'Early Career':'background:var(--orange-light);color:var(--orange-dark);',
-    'Mid Career':'background:var(--teal-light);color:var(--teal-dark);',
-    'Late Career':'background:#f3e8ff;color:#7c3aed;',
-    'Student':'background:#ecfdf5;color:#059669;',
-  };
-
-  const avatarHtml = state.photoData
-    ? `<img src="${state.photoData}" class="profile-avatar" alt="Profile">`
-    : `<div class="profile-avatar-placeholder">${state.name.charAt(0).toUpperCase()}</div>`;
-
-  const interestTags = state.interests.map(i => `<span class="profile-tag orange">${i}</span>`).join('');
-  const connectionTags = state.connections.map(c => `<span class="profile-tag teal">${c}</span>`).join('');
-
-  const hasMatches = currentUserMatches.length > 0;
-
-  let matchContent = '';
-  if (hasMatches) {
-    matchContent = currentUserMatches.map((m,idx) => {
-      const isAccepted = acceptedUsers[m.id];
-      const isDeclined = declinedUsers[m.id];
-      const avatarInner = m.photoData
-        ? `<img src="${m.photoData}" alt="${m.name}">`
-        : m.name.split(' ').map(n=>n[0]).join('');
-      return `
-        <div class="match-card ${isDeclined?'declined':''}" onclick="openSnapshot(${idx})">
-          <div class="match-avatar">${avatarInner}</div>
-          <div class="match-info">
-            <div class="match-name">${m.name}</div>
-            <div class="match-reason">${m.reasons[0]}${m.reasons[1]?' · '+m.reasons[1]:''}</div>
-            ${isAccepted?'<span class="match-accepted-badge">✓ Connected</span>':''}
-          </div>
-        </div>`;
+function renderDashboard(){
+  const container=document.getElementById('dashboardContent');
+  const sc={'Early Career':'background:var(--orange-light);color:var(--orange-dark);','Mid Career':'background:var(--teal-light);color:var(--teal-dark);','Late Career':'background:#f3e8ff;color:#7c3aed;','Student':'background:#ecfdf5;color:#059669;'};
+  const av=state.photoData?`<img src="${state.photoData}" class="profile-avatar" alt="Profile">`:`<div class="profile-avatar-placeholder">${state.name.charAt(0).toUpperCase()}</div>`;
+  const it=state.interests.map(i=>`<span class="profile-tag orange">${i}</span>`).join('');
+  const ct=state.connections.map(c=>`<span class="profile-tag teal">${c}</span>`).join('');
+  const hm=currentUserMatches.length>0;
+  let mc='';
+  if(hm){
+    mc=currentUserMatches.map((m,i)=>{
+      const ia=acceptedUsers[m.id],id=declinedUsers[m.id];
+      const ai=m.photoData?`<img src="${m.photoData}" alt="${m.name}">`:m.name.split(' ').map(n=>n[0]).join('');
+      return`<div class="match-card ${id?'declined':''}" onclick="openSnapshot(${i})"><div class="match-avatar">${ai}</div><div class="match-info"><div class="match-name">${m.name}</div><div class="match-reason">${m.reasons[0]}${m.reasons[1]?' · '+m.reasons[1]:''}</div>${ia?'<span class="match-accepted-badge">✓ Connected</span>':''}</div></div>`;
     }).join('');
   } else {
-    matchContent = `
-      <div class="waiting-illustration">
-        <div class="waiting-icon">🌱</div>
-        <div class="waiting-title">You're Early!</div>
-        <div class="waiting-text">
-          Thank you so much for trying NetX, please be patient while we gather more people.
-          You will be notified once you receive a match!
-        </div>
-        <div class="notification-badge">
-          <span>✉️</span> We'll email you at <strong style="margin-left:4px;">${state.email}</strong>
-        </div>
-      </div>`;
+    mc=`<div class="waiting-illustration"><div class="waiting-icon">🌱</div><div class="waiting-title">You're Early!</div><div class="waiting-text">Thank you so much for trying NetX, please be patient while we gather more people. You will be notified once you receive a match!</div><div class="notification-badge"><span>✉️</span> We'll email you at <strong style="margin-left:4px;">${state.email}</strong></div></div>`;
   }
-
-  const msgContent = messages.length > 0
-    ? messages.map(m => `
-      <div style="background:white;border-radius:14px;padding:16px 20px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.06);">
-        <div style="font-weight:600;font-size:14px;margin-bottom:4px;">To: ${m.to}</div>
-        <div style="font-size:14px;color:var(--text);line-height:1.5;">${m.text}</div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">${m.time}</div>
-      </div>`).join('')
-    : `<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;">
-        <div style="font-size:32px;margin-bottom:12px;">💬</div>
-        No messages yet.<br>Accept a match to start a conversation!
-      </div>`;
-
-  container.innerHTML = `
-    <div id="view-profile">
-      <div class="card animate-in" style="margin-bottom:16px;">
-        <div class="profile-header">
-          ${avatarHtml}
-          <div class="profile-name">${state.name}</div>
-          <span class="profile-status-badge" style="${statusColors[state.career]||''}">${state.career}</span>
-        </div>
-        <div class="profile-section">
-          <div class="profile-section-title">Email</div>
-          <div class="profile-text">${state.email}</div>
-        </div>
-        <div class="profile-section">
-          <div class="profile-section-title">Currently Focused On</div>
-          <div class="profile-text">${state.focus}</div>
-        </div>
-        <div class="profile-section">
-          <div class="profile-section-title">Interests</div>
-          <div class="profile-tags">${interestTags}</div>
-        </div>
-        ${state.passion ? `
-        <div class="profile-section">
-          <div class="profile-section-title">Could Talk About For Hours</div>
-          <div class="profile-text">${state.passion}</div>
-        </div>` : ''}
-        <div class="profile-section">
-          <div class="profile-section-title">Looking For</div>
-          <div class="profile-tags">${connectionTags}</div>
-        </div>
-        <button class="btn btn-secondary" style="width:100%;margin-top:12px;" onclick="openEditProfile()">✏️ Edit Profile</button>
+  const mg=messages.length>0?messages.map(m=>`<div style="background:white;border-radius:14px;padding:16px 20px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.06);"><div style="font-weight:600;font-size:14px;margin-bottom:4px;">To: ${m.to}</div><div style="font-size:14px;color:var(--text);line-height:1.5;">${m.text}</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">${m.time}</div></div>`).join(''):`<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">💬</div>No messages yet.<br>Accept a match to start a conversation!</div>`;
+  container.innerHTML=`
+    <div id="view-profile"><div class="card animate-in" style="margin-bottom:16px;">
+      <div class="profile-header">${av}<div class="profile-name">${state.name}</div><span class="profile-status-badge" style="${sc[state.career]||''}">${state.career}</span></div>
+      <div class="profile-section"><div class="profile-section-title">Email</div><div class="profile-text">${state.email}</div></div>
+      <div class="profile-section"><div class="profile-section-title">Currently Focused On</div><div class="profile-text">${state.focus}</div></div>
+      <div class="profile-section"><div class="profile-section-title">Interests</div><div class="profile-tags">${it}</div></div>
+      ${state.passion?`<div class="profile-section"><div class="profile-section-title">Could Talk About For Hours</div><div class="profile-text">${state.passion}</div></div>`:''}
+      <div class="profile-section"><div class="profile-section-title">Looking For</div><div class="profile-tags">${ct}</div></div>
+      <div class="profile-actions">
+        <button class="btn btn-secondary" style="width:100%;" onclick="openEditProfile()">✏️ Edit Profile</button>
+        <button class="btn btn-logout" style="width:100%;" onclick="doLogout()">Log Out</button>
+        <hr class="divider">
+        <button class="btn btn-danger" style="width:100%;" onclick="openDeleteModal()">🗑️ Delete Profile</button>
       </div>
-    </div>
-    <div id="view-matches" style="display:none;">
-      <div class="animate-in">
-        <div class="matches-header">
-          <h2>${hasMatches ? 'Your Top Matches' : 'Matches'}</h2>
-          <p style="color:var(--text-muted);font-size:14px;">${hasMatches ? 'Based on your interests & goals' : 'Waiting for the community to grow'}</p>
-        </div>
-        ${matchContent}
-      </div>
-    </div>
-    <div id="view-messages" style="display:none;">
-      <div class="animate-in">
-        <div class="matches-header"><h2>Messages</h2><p style="color:var(--text-muted);font-size:14px;">Your conversations</p></div>
-        ${msgContent}
-      </div>
-    </div>
-  `;
+    </div></div>
+    <div id="view-matches" style="display:none;"><div class="animate-in"><div class="matches-header"><h2>${hm?'Your Top Matches':'Matches'}</h2><p style="color:var(--text-muted);font-size:14px;">${hm?'Based on your interests & goals':'Waiting for the community to grow'}</p></div>${mc}</div></div>
+    <div id="view-messages" style="display:none;"><div class="animate-in"><div class="matches-header"><h2>Messages</h2><p style="color:var(--text-muted);font-size:14px;">Your conversations</p></div>${mg}</div></div>`;
 }
 
-// ─── Tab switching ───
-function showTab(tab) {
+function showTab(tab){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');
-  document.getElementById('view-profile').style.display = tab==='profile'?'block':'none';
-  document.getElementById('view-matches').style.display = tab==='matches'?'block':'none';
-  document.getElementById('view-messages').style.display = tab==='messages'?'block':'none';
+  document.getElementById('view-profile').style.display=tab==='profile'?'block':'none';
+  document.getElementById('view-matches').style.display=tab==='matches'?'block':'none';
+  document.getElementById('view-messages').style.display=tab==='messages'?'block':'none';
 }
 
 // ─── Snapshot ───
-function openSnapshot(idx) {
-  const match = currentUserMatches[idx];
-  if (!match) return;
-  const isAccepted = acceptedUsers[match.id];
-  const prompt = generateSmartPrompt(state, match);
-  const interestTags = match.interests.map(i => `<span class="profile-tag orange">${i}</span>`).join('');
-  const avatarInner = match.photoData
-    ? `<img src="${match.photoData}" alt="${match.name}">`
-    : match.name.split(' ').map(n=>n[0]).join('');
-
-  document.getElementById('snapshotCard').innerHTML = `
+function openSnapshot(idx){
+  const m=currentUserMatches[idx];if(!m)return;
+  const ia=acceptedUsers[m.id],pr=generateSmartPrompt(state,m);
+  const it=m.interests.map(i=>`<span class="profile-tag orange">${i}</span>`).join('');
+  const ai=m.photoData?`<img src="${m.photoData}" alt="${m.name}">`:m.name.split(' ').map(n=>n[0]).join('');
+  document.getElementById('snapshotCard').innerHTML=`
     <button class="snapshot-close" onclick="closeSnapshot()">✕</button>
-    <div class="snapshot-avatar">${avatarInner}</div>
-    <div class="snapshot-name">${match.name}</div>
-    <div class="profile-section">
-      <div class="profile-section-title">Their Interests</div>
-      <div class="profile-tags">${interestTags}</div>
-    </div>
-    ${match.passion ? `<div class="profile-section"><div class="profile-section-title">Could Talk About For Hours</div><div class="profile-text">${match.passion}</div></div>` : ''}
-    <div class="smart-prompt">
-      <span class="smart-prompt-icon">💡</span>
-      <div class="smart-prompt-label">Conversation Starter</div>
-      <div class="smart-prompt-text">${prompt}</div>
-    </div>
-    ${isAccepted ? `
-      <div class="dm-panel open">
-        <div id="dmForm-${idx}">
-          <div style="font-size:13px;color:var(--green);font-weight:600;margin-bottom:12px;">✓ Connected — Send a message!</div>
-          <div class="dm-input-row">
-            <input type="text" class="dm-input" id="dmInput-${idx}" placeholder="Type your message...">
-            <button class="dm-send" onclick="sendDM(${idx})">Send</button>
-          </div>
-        </div>
-        <div class="dm-sent-confirmation" id="dmSent-${idx}">✓ Message sent to ${match.name}!</div>
-      </div>
-    ` : `
-      <div class="snapshot-actions">
-        <button class="btn btn-decline" onclick="declineMatch(${idx})">✕ Decline</button>
-        <button class="btn btn-green" onclick="tryAcceptMatch(${idx})">✓ Accept</button>
-      </div>
-    `}
-  `;
+    <div class="snapshot-avatar">${ai}</div><div class="snapshot-name">${m.name}</div>
+    <div class="profile-section"><div class="profile-section-title">Their Interests</div><div class="profile-tags">${it}</div></div>
+    ${m.passion?`<div class="profile-section"><div class="profile-section-title">Could Talk About For Hours</div><div class="profile-text">${m.passion}</div></div>`:''}
+    <div class="smart-prompt"><span class="smart-prompt-icon">💡</span><div class="smart-prompt-label">Conversation Starter</div><div class="smart-prompt-text">${pr}</div></div>
+    ${ia?`<div class="dm-panel open"><div id="dmForm-${idx}"><div style="font-size:13px;color:var(--green);font-weight:600;margin-bottom:12px;">✓ Connected — Send a message!</div><div class="dm-input-row"><input type="text" class="dm-input" id="dmInput-${idx}" placeholder="Type your message..."><button class="dm-send" onclick="sendDM(${idx})">Send</button></div></div><div class="dm-sent-confirmation" id="dmSent-${idx}">✓ Message sent to ${m.name}!</div></div>`:
+    `<div class="snapshot-actions"><button class="btn btn-decline" onclick="declineMatch(${idx})">✕ Decline</button><button class="btn btn-green" onclick="tryAcceptMatch(${idx})">✓ Accept</button></div>`}`;
   document.getElementById('snapshotOverlay').classList.add('open');
 }
+function closeSnapshot(){document.getElementById('snapshotOverlay').classList.remove('open');}
+function closeSnapshotOutside(e){if(e.target===document.getElementById('snapshotOverlay'))closeSnapshot();}
 
-function closeSnapshot() { document.getElementById('snapshotOverlay').classList.remove('open'); }
-function closeSnapshotOutside(e) { if(e.target===document.getElementById('snapshotOverlay')) closeSnapshot(); }
-
-// ─── Accept with break check ───
-function getAcceptedCount() { return Object.keys(acceptedUsers).length; }
-
-function tryAcceptMatch(idx) {
-  if (getAcceptedCount() >= 2) {
-    pendingAcceptIdx = idx;
-    document.getElementById('breakModal').classList.add('open');
-  } else {
-    doAcceptMatch(idx);
-  }
+// ─── Accept/decline with break ───
+function getAcceptedCount(){return Object.keys(acceptedUsers).length;}
+function tryAcceptMatch(idx){if(getAcceptedCount()>=2){pendingAcceptIdx=idx;document.getElementById('breakModal').classList.add('open');}else doAcceptMatch(idx);}
+async function doAcceptMatch(idx){
+  const m=currentUserMatches[idx];acceptedUsers[m.id]=true;
+  sendNotificationEmail(m.email||'user@netx.com',state.name);
+  await persistUserData();
+  openSnapshot(idx);renderDashboard();showTab('matches');
 }
-
-function doAcceptMatch(idx) {
-  const match = currentUserMatches[idx];
-  acceptedUsers[match.id] = true;
-  sendNotificationEmail(match.email || 'user@netx.com', state.name);
-  saveUserSession({ id: state.id, acceptedUsers, declinedUsers, messages });
-
-  // Notification dot
-  const tab = document.getElementById('tabMatches');
-  if (!tab.querySelector('.notif-dot')) {
-    const dot = document.createElement('span');
-    dot.className = 'notif-dot';
-    tab.querySelector('span').after(dot);
-  }
-
-  openSnapshot(idx);
-  renderDashboard();
-  showTab('matches');
-}
-
-function confirmAccept() {
-  closeBreakModal();
-  if (pendingAcceptIdx !== null) {
-    doAcceptMatch(pendingAcceptIdx);
-    pendingAcceptIdx = null;
-  }
-}
-
-function declineMatch(idx) {
-  const match = currentUserMatches[idx];
-  declinedUsers[match.id] = true;
-  saveUserSession({ id: state.id, acceptedUsers, declinedUsers, messages });
-  closeSnapshot();
-  renderDashboard();
-  showTab('matches');
-}
-
-// ─── Break modal ───
-function closeBreakModal() { document.getElementById('breakModal').classList.remove('open'); }
-function closeBreakModalOutside(e) { if(e.target===document.getElementById('breakModal')) closeBreakModal(); }
-function showLearnMore() {
-  closeBreakModal();
-  document.getElementById('learnMoreModal').classList.add('open');
-}
-function closeLearnMore() { document.getElementById('learnMoreModal').classList.remove('open'); }
-function closeLearnMoreOutside(e) { if(e.target===document.getElementById('learnMoreModal')) closeLearnMore(); }
+function confirmAccept(){closeBreakModal();if(pendingAcceptIdx!==null){doAcceptMatch(pendingAcceptIdx);pendingAcceptIdx=null;}}
+async function declineMatch(idx){const m=currentUserMatches[idx];declinedUsers[m.id]=true;await persistUserData();closeSnapshot();renderDashboard();showTab('matches');}
+function closeBreakModal(){document.getElementById('breakModal').classList.remove('open');}
+function showLearnMore(){closeBreakModal();document.getElementById('learnMoreModal').classList.add('open');}
+function closeLearnMore(){document.getElementById('learnMoreModal').classList.remove('open');}
 
 // ─── DM ───
-function sendDM(idx) {
-  const match = currentUserMatches[idx];
-  const input = document.getElementById('dmInput-' + idx);
-  const text = input.value.trim();
-  if (!text) return;
-
-  messages.push({ to: match.name, text, time: new Date().toLocaleString() });
-  sendDMNotificationEmail(match.email || 'user@netx.com', state.name, text);
-  saveUserSession({ id: state.id, acceptedUsers, declinedUsers, messages });
-
-  document.getElementById('dmForm-' + idx).style.display = 'none';
-  document.getElementById('dmSent-' + idx).style.display = 'block';
-  renderDashboard();
-  showTab('matches');
-  openSnapshot(idx);
+async function sendDM(idx){
+  const m=currentUserMatches[idx];const input=document.getElementById('dmInput-'+idx);const text=input.value.trim();if(!text)return;
+  messages.push({to:m.name,text,time:new Date().toLocaleString()});
+  sendDMNotificationEmail(m.email||'user@netx.com',state.name,text);
+  await persistUserData();
+  document.getElementById('dmForm-'+idx).style.display='none';
+  document.getElementById('dmSent-'+idx).style.display='block';
+  renderDashboard();showTab('matches');openSnapshot(idx);
 }
 
 // ─── Edit Profile ───
-function openEditProfile() {
-  const connectionOptions = ['Mentorship','Career advice','Job opportunities','Collaboration','Just meeting interesting people'];
-  const careerOptions = ['Early Career','Mid Career','Late Career','Student'];
-
-  const connectionChips = connectionOptions.map(c =>
-    `<div class="edit-chip ${state.connections.includes(c)?'selected':''}" data-value="${c}" onclick="toggleEditChip(this,'connections')">${c}</div>`
-  ).join('');
-
-  const careerChips = careerOptions.map(c =>
-    `<div class="edit-chip ${state.career===c?'selected':''}" data-value="${c}" onclick="selectEditChip(this,'career')">${c}</div>`
-  ).join('');
-
-  const avatarInner = state.photoData
-    ? `<img src="${state.photoData}" alt="Photo">`
-    : `<div style="font-size:28px;color:#c4c8cf;">📷</div>`;
-
-  document.getElementById('snapshotCard').innerHTML = `
+function openEditProfile(){
+  const connOpts=['Mentorship','Career advice','Job opportunities','Collaboration','Just meeting interesting people'];
+  const careerOpts=['Early Career','Mid Career','Late Career','Student'];
+  const cc=connOpts.map(c=>`<div class="edit-chip ${state.connections.includes(c)?'selected':''}" data-value="${c}" onclick="toggleEditChip(this)">${c}</div>`).join('');
+  const ck=careerOpts.map(c=>`<div class="edit-chip ${state.career===c?'selected':''}" data-value="${c}" onclick="selectEditChip(this)">${c}</div>`).join('');
+  const ai=state.photoData?`<img src="${state.photoData}" alt="Photo">`:`<div style="font-size:28px;color:#c4c8cf;">📷</div>`;
+  document.getElementById('snapshotCard').innerHTML=`
     <button class="snapshot-close" onclick="closeSnapshot()">✕</button>
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">Edit Profile</div>
-    </div>
-    <div class="edit-section" style="text-align:center;">
-      <div class="edit-photo-zone" onclick="document.getElementById('editPhotoInput').click()">
-        ${avatarInner}
-      </div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Tap to change photo</div>
-      <input type="file" id="editPhotoInput" accept="image/*" style="display:none;" onchange="handleEditPhoto(event)">
-    </div>
-    <div class="edit-section">
-      <label>Name</label>
-      <input type="text" class="text-input" id="editName" value="${state.name}">
-    </div>
-    <div class="edit-section">
-      <label>Email</label>
-      <input type="email" class="text-input" id="editEmail" value="${state.email}">
-    </div>
-    <div class="edit-section">
-      <label>Career Status</label>
-      <div class="edit-chip-grid" id="editCareerChips">${careerChips}</div>
-    </div>
-    <div class="edit-section">
-      <label>Currently Focused On</label>
-      <textarea class="text-input" id="editFocus" rows="2">${state.focus}</textarea>
-    </div>
-    <div class="edit-section">
-      <label>Connection Goals</label>
-      <div class="edit-chip-grid" id="editConnectionChips">${connectionChips}</div>
-    </div>
-    <div class="edit-section">
-      <label>Interests (comma-separated)</label>
-      <textarea class="text-input" id="editInterests" rows="2">${state.interests.join(', ')}</textarea>
-    </div>
-    <div class="edit-section">
-      <label>Could Talk About For Hours</label>
-      <input type="text" class="text-input" id="editPassion" value="${state.passion}">
-    </div>
-    <div class="btn-row" style="margin-top:24px;">
-      <button class="btn btn-secondary" onclick="closeSnapshot()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveEditProfile()">Save Changes</button>
-    </div>
-  `;
+    <div style="text-align:center;margin-bottom:20px;"><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">Edit Profile</div></div>
+    <div class="edit-section" style="text-align:center;"><div class="edit-photo-zone" onclick="document.getElementById('editPhotoInput').click()">${ai}</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Tap to change photo</div><input type="file" id="editPhotoInput" accept="image/*" style="display:none;" onchange="handleEditPhoto(event)"></div>
+    <div class="edit-section"><label>Name</label><input type="text" class="text-input" id="editName" value="${state.name}"></div>
+    <div class="edit-section"><label>Career Status</label><div class="edit-chip-grid" id="editCareerChips">${ck}</div></div>
+    <div class="edit-section"><label>Currently Focused On</label><textarea class="text-input" id="editFocus" rows="2">${state.focus}</textarea></div>
+    <div class="edit-section"><label>Connection Goals</label><div class="edit-chip-grid" id="editConnectionChips">${cc}</div></div>
+    <div class="edit-section"><label>Interests (comma-separated)</label><textarea class="text-input" id="editInterests" rows="2">${state.interests.join(', ')}</textarea></div>
+    <div class="edit-section"><label>Could Talk About For Hours</label><input type="text" class="text-input" id="editPassion" value="${state.passion}"></div>
+    <div class="btn-row" style="margin-top:24px;"><button class="btn btn-secondary" onclick="closeSnapshot()">Cancel</button><button class="btn btn-primary" onclick="saveEditProfile()">Save Changes</button></div>`;
   document.getElementById('snapshotOverlay').classList.add('open');
 }
-
-function toggleEditChip(el) {
-  el.classList.toggle('selected');
-}
-function selectEditChip(el, key) {
-  el.parentElement.querySelectorAll('.edit-chip').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function handleEditPhoto(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    state.photoData = reader.result;
-    const zone = document.querySelector('.edit-photo-zone');
-    zone.innerHTML = `<img src="${reader.result}" alt="Photo" style="width:100%;height:100%;object-fit:cover;">`;
-  };
-  reader.readAsDataURL(file);
-}
-
-async function saveEditProfile() {
-  state.name = document.getElementById('editName').value.trim() || state.name;
-  state.email = document.getElementById('editEmail').value.trim() || state.email;
-  state.focus = document.getElementById('editFocus').value.trim() || state.focus;
-  state.interests = document.getElementById('editInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
-  state.passion = document.getElementById('editPassion').value.trim();
-
-  // Career
-  const careerSel = document.querySelector('#editCareerChips .edit-chip.selected');
-  if (careerSel) state.career = careerSel.dataset.value;
-
-  // Connections
-  state.connections = [...document.querySelectorAll('#editConnectionChips .edit-chip.selected')].map(c=>c.dataset.value);
-
-  // Update in persistent storage
-  const allUsers = await loadAllUsers();
-  const idx = allUsers.findIndex(u => u.id === state.id);
-  if (idx >= 0) {
-    allUsers[idx] = { ...state };
-    await saveAllUsers(allUsers);
-  }
-
-  // Recompute matches with updated profile
+function toggleEditChip(el){el.classList.toggle('selected');}
+function selectEditChip(el){el.parentElement.querySelectorAll('.edit-chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');}
+function handleEditPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.photoData=r.result;document.querySelector('.edit-photo-zone').innerHTML=`<img src="${r.result}" alt="Photo" style="width:100%;height:100%;object-fit:cover;">`;};r.readAsDataURL(f);}
+async function saveEditProfile(){
+  state.name=document.getElementById('editName').value.trim()||state.name;
+  state.focus=document.getElementById('editFocus').value.trim()||state.focus;
+  state.interests=document.getElementById('editInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
+  state.passion=document.getElementById('editPassion').value.trim();
+  const cs=document.querySelector('#editCareerChips .edit-chip.selected');
+  if(cs)state.career=cs.dataset.value;
+  state.connections=[...document.querySelectorAll('#editConnectionChips .edit-chip.selected')].map(c=>c.dataset.value);
+  // Update in storage
+  const allUsers=await loadAllUsers();
+  const idx=allUsers.findIndex(u=>u.id===state.id);
+  if(idx>=0){allUsers[idx]={...allUsers[idx],...state};await saveAllUsers(allUsers);}
   await recomputeMatches();
-
-  closeSnapshot();
-  renderDashboard();
-  showTab('profile');
+  closeSnapshot();renderDashboard();showTab('profile');
 }
 
-// ─── Init: check for existing session ───
-(async function init() {
-  const session = await loadUserSession();
-  if (session && session.id) {
-    const allUsers = await loadAllUsers();
-    const existing = allUsers.find(u => u.id === session.id);
-    if (existing) {
-      Object.assign(state, existing);
-      acceptedUsers = session.acceptedUsers || {};
-      declinedUsers = session.declinedUsers || {};
-      messages = session.messages || [];
-      currentUserMatches = computeMatches(state, allUsers);
+// ─── Auto-login from session ───
+(async function init(){
+  const session=await loadSession();
+  if(session&&session.id){
+    const allUsers=await loadAllUsers();
+    const user=allUsers.find(u=>u.id===session.id);
+    if(user){
+      Object.assign(state,{name:user.name,email:user.email,career:user.career,focus:user.focus,connections:user.connections,interests:user.interests,passion:user.passion,photoData:user.photoData,id:user.id});
+      acceptedUsers=user.acceptedUsers||{};
+      declinedUsers=user.declinedUsers||{};
+      messages=user.messages||[];
+      currentUserMatches=computeMatches(state,allUsers);
       renderDashboard();
       navigate('dashboard');
       return;
     }
   }
-  // No session — stay on welcome
 })();
 </script>
 </body>
