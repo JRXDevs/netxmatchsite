@@ -1,0 +1,15 @@
+{
+  "name": "netx-mvp",
+  "version": "1.0.0",
+  "description": "NetX — Professional Matchmaking Platform MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  },
+  "optionalDependencies": {
+    "nodemailer": "^6.9.0"
+  }
+}
