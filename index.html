@@ -234,7 +234,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <script>
 // ─── API helper ───
-const API = '';
+// ╔═══════════════════════════════════════════════════════════╗
+// ║  IMPORTANT: Replace YOUR_APP_NAME with your Render app  ║
+// ║  Example: https://netx-api.onrender.com                 ║
+// ╚═══════════════════════════════════════════════════════════╝
+const API = 'https://netx-api.onrender.com';
 let authToken = localStorage.getItem('netx_token') || null;
 let currentUser = null;
 let currentMatches = [];
