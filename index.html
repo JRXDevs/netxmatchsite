@@ -65,8 +65,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .photo-upload-zone{width:160px;height:160px;border-radius:50%;border:3px dashed #d1d5db;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin:0 auto 12px;transition:all 0.3s;overflow:hidden;background:#f9fafb;}
 .photo-upload-zone:hover{border-color:var(--orange);background:var(--orange-light);}
 .photo-upload-zone img{width:100%;height:100%;object-fit:cover;}
-.photo-upload-zone .upload-icon{font-size:32px;color:#c4c8cf;margin-bottom:4px;}
-.photo-upload-zone .upload-text{font-size:12px;color:var(--text-muted);font-weight:500;}
 .selfie-note{text-align:center;font-size:13px;color:var(--orange);font-weight:600;font-style:italic;margin-bottom:4px;}
 .profile-header{text-align:center;margin-bottom:32px;}
 .profile-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;border:4px solid white;box-shadow:0 4px 20px rgba(0,0,0,0.1);margin-bottom:14px;}
@@ -125,7 +123,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .nav-tab:hover{color:var(--text);}
 .nav-tab.active{background:linear-gradient(135deg,var(--orange),var(--teal));color:white;box-shadow:0 2px 12px rgba(255,145,73,0.25);}
 .nav-tab span{display:block;font-size:18px;margin-bottom:2px;}
-.nav-tab .notif-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);display:inline-block;margin-left:4px;vertical-align:top;animation:pulse-glow 1.5s ease-in-out infinite;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s ease;backdrop-filter:blur(4px);}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal-card{background:white;border-radius:20px;padding:36px 32px;max-width:400px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.2);transform:translateY(20px) scale(0.96);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);text-align:center;}
@@ -134,7 +131,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:10px;}
 .modal-text{font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:20px;}
 .modal-learn-more{font-size:12px;color:var(--teal);cursor:pointer;text-decoration:underline;margin-top:8px;background:none;border:none;font-family:'DM Sans',sans-serif;}
-.modal-learn-more:hover{color:var(--teal-dark);}
 .edit-section{margin-bottom:20px;}
 .edit-section label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-muted);margin-bottom:6px;}
 .edit-photo-zone{width:100px;height:100px;border-radius:50%;border:3px dashed #d1d5db;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;margin:0 auto 8px;transition:all 0.3s;overflow:hidden;background:#f9fafb;}
@@ -160,6 +156,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .animate-in{animation:fadeInUp 0.5s ease forwards;}
 .profile-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+.msg-thread{background:white;border-radius:14px;padding:16px 20px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.06);}
+.msg-direction{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.msg-direction.sent{color:var(--teal);}
+.msg-direction.received{color:var(--orange);}
 </style>
 </head>
 <body>
@@ -170,7 +170,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="progress-label" id="progressLabel"></div>
   </div>
 
-  <!-- Welcome -->
   <div class="screen active" id="screen-welcome">
     <div class="card animate-in">
       <div class="welcome-header">
@@ -178,12 +177,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <h1>Hey There, Welcome To NetX</h1>
         <p>Let's complete some questions so we can connect you with the right people.</p>
       </div>
-      <button class="btn btn-primary" style="width:100%;" onclick="navigate('name')">Let's Get Started →</button>
-      <div class="login-link" style="margin-top:20px;">Already have an account? <a onclick="navigate('login')">Log In</a></div>
+      <button class="btn btn-primary" style="width:100%;" onclick="nav('name')">Let's Get Started →</button>
+      <div class="login-link" style="margin-top:20px;">Already have an account? <a onclick="nav('login')">Log In</a></div>
     </div>
   </div>
 
-  <!-- Login -->
   <div class="screen" id="screen-login">
     <div class="card animate-in">
       <div class="welcome-header" style="margin-bottom:24px;">
@@ -191,183 +189,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <h1>Welcome Back</h1>
         <p>Log in to see your matches and messages.</p>
       </div>
-      <div class="edit-section">
-        <label>Email</label>
-        <input type="email" class="text-input" id="loginEmail" placeholder="you@example.com" data-enter-target="btnLogin">
-      </div>
-      <div class="edit-section">
-        <label>Password</label>
-        <input type="password" class="text-input" id="loginPassword" placeholder="Enter your password" data-enter-target="btnLogin">
-      </div>
+      <div class="edit-section"><label>Email</label><input type="email" class="text-input" id="loginEmail" placeholder="you@example.com" data-enter-target="btnLogin"></div>
+      <div class="edit-section"><label>Password</label><input type="password" class="text-input" id="loginPassword" placeholder="Enter your password" data-enter-target="btnLogin"></div>
       <div class="error-text" id="loginError"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:16px;" id="btnLogin" onclick="doLogin()">Log In →</button>
-      <div class="login-link">Don't have an account? <a onclick="navigate('welcome')">Sign Up</a></div>
+      <div class="login-link">Don't have an account? <a onclick="nav('welcome')">Sign Up</a></div>
     </div>
   </div>
 
-  <!-- Name -->
-  <div class="screen" id="screen-name">
-    <div class="card animate-in">
-      <span class="section-tag about">First Things First</span>
-      <div class="question-label">What should we call you?</div>
-      <div class="question-hint">Your display name on NetX</div>
-      <input type="text" class="text-input" id="inputName" placeholder="Enter your name" maxlength="40" data-enter-target="btnName">
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="saveAndNav('name','email')" id="btnName" disabled>Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-name"><div class="card animate-in"><span class="section-tag about">First Things First</span><div class="question-label">What should we call you?</div><div class="question-hint">Your display name on NetX</div><input type="text" class="text-input" id="inputName" placeholder="Enter your name" maxlength="40" data-enter-target="btnName"><div class="btn-row"><button class="btn btn-primary" onclick="saveField('name');nav('email')" id="btnName" disabled>Continue →</button></div></div></div>
 
-  <!-- Email -->
-  <div class="screen" id="screen-email">
-    <div class="card animate-in">
-      <span class="section-tag about">Stay In The Loop</span>
-      <div class="question-label">What's your email?</div>
-      <div class="question-hint">We'll notify you when you get a match — no spam, ever.</div>
-      <input type="email" class="text-input" id="inputEmail" placeholder="you@example.com" data-enter-target="btnEmail">
-      <div class="error-text" id="emailExistsError">An account with this email already exists. <a style="color:var(--teal);cursor:pointer;text-decoration:underline;" onclick="navigate('login')">Log in instead?</a></div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('name')">← Back</button>
-        <button class="btn btn-primary" onclick="saveAndNav('email','career')" id="btnEmail" disabled>Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-email"><div class="card animate-in"><span class="section-tag about">Stay In The Loop</span><div class="question-label">What's your email?</div><div class="question-hint">We'll notify you when you get a match — no spam, ever.</div><input type="email" class="text-input" id="inputEmail" placeholder="you@example.com" data-enter-target="btnEmail"><div class="error-text" id="emailExistsError">An account with this email already exists. <a style="color:var(--teal);cursor:pointer;text-decoration:underline;" onclick="nav('login')">Log in instead?</a></div><div class="btn-row"><button class="btn btn-secondary" onclick="nav('name')">← Back</button><button class="btn btn-primary" onclick="checkEmailAndContinue()" id="btnEmail" disabled>Continue →</button></div></div></div>
 
-  <!-- Career -->
-  <div class="screen" id="screen-career">
-    <div class="card animate-in">
-      <span class="section-tag about">Let's Learn About You</span>
-      <div class="question-label">1. What is your current career status?</div>
-      <div class="option-grid" id="careerOptions">
-        <div class="option-chip" data-value="Early Career">Early</div>
-        <div class="option-chip" data-value="Mid Career">Mid</div>
-        <div class="option-chip" data-value="Late Career">Late</div>
-        <div class="option-chip" data-value="Student">Student</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('email')">← Back</button>
-        <button class="btn btn-primary" onclick="saveAndNav('career','focus')" id="btnCareer" disabled>Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-career"><div class="card animate-in"><span class="section-tag about">Let's Learn About You</span><div class="question-label">1. What is your current career status?</div><div class="option-grid" id="careerOptions"><div class="option-chip" data-value="Early Career">Early</div><div class="option-chip" data-value="Mid Career">Mid</div><div class="option-chip" data-value="Late Career">Late</div><div class="option-chip" data-value="Student">Student</div></div><div class="btn-row"><button class="btn btn-secondary" onclick="nav('email')">← Back</button><button class="btn btn-primary" onclick="nav('focus')" id="btnCareer" disabled>Continue →</button></div></div></div>
 
-  <!-- Focus -->
-  <div class="screen" id="screen-focus">
-    <div class="card animate-in">
-      <span class="section-tag about">Let's Learn About You</span>
-      <div class="question-label">2. What are you currently focused on?</div>
-      <div class="question-hint">Ex: finding a job, switching careers, building a startup, learning something new</div>
-      <textarea class="text-input" id="inputFocus" rows="3" placeholder="Tell us what you're focused on right now..." data-enter-target="btnFocus"></textarea>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('career')">← Back</button>
-        <button class="btn btn-primary" onclick="saveAndNav('focus','connections')" id="btnFocus" disabled>Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-focus"><div class="card animate-in"><span class="section-tag about">Let's Learn About You</span><div class="question-label">2. What are you currently focused on?</div><div class="question-hint">Ex: finding a job, switching careers, building a startup, learning something new</div><textarea class="text-input" id="inputFocus" rows="3" placeholder="Tell us what you're focused on right now..." data-enter-target="btnFocus"></textarea><div class="btn-row"><button class="btn btn-secondary" onclick="nav('career')">← Back</button><button class="btn btn-primary" onclick="saveField('focus');nav('connections')" id="btnFocus" disabled>Continue →</button></div></div></div>
 
-  <!-- Connections -->
-  <div class="screen" id="screen-connections">
-    <div class="card animate-in">
-      <span class="section-tag about">Let's Learn About You</span>
-      <div class="question-label">3. What are you hoping to get from new connections?</div>
-      <div class="question-hint">Select all that apply</div>
-      <div class="option-grid" id="connectionOptions" style="grid-template-columns:1fr;">
-        <div class="option-chip teal" data-value="Mentorship">🧭 Mentorship</div>
-        <div class="option-chip teal" data-value="Career advice">💼 Career advice</div>
-        <div class="option-chip teal" data-value="Job opportunities">🚀 Job opportunities</div>
-        <div class="option-chip teal" data-value="Collaboration">🤝 Collaboration</div>
-        <div class="option-chip teal" data-value="Just meeting interesting people">✨ Just meeting interesting people</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('focus')">← Back</button>
-        <button class="btn btn-primary" onclick="saveAndNav('connections','interests')" id="btnConnections" disabled>Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-connections"><div class="card animate-in"><span class="section-tag about">Let's Learn About You</span><div class="question-label">3. What are you hoping to get from new connections?</div><div class="question-hint">Select all that apply</div><div class="option-grid" id="connectionOptions" style="grid-template-columns:1fr;"><div class="option-chip teal" data-value="Mentorship">🧭 Mentorship</div><div class="option-chip teal" data-value="Career advice">💼 Career advice</div><div class="option-chip teal" data-value="Job opportunities">🚀 Job opportunities</div><div class="option-chip teal" data-value="Collaboration">🤝 Collaboration</div><div class="option-chip teal" data-value="Just meeting interesting people">✨ Just meeting interesting people</div></div><div class="btn-row"><button class="btn btn-secondary" onclick="nav('focus')">← Back</button><button class="btn btn-primary" onclick="nav('interests')" id="btnConnections" disabled>Continue →</button></div></div></div>
 
-  <!-- Interests -->
-  <div class="screen" id="screen-interests">
-    <div class="card animate-in">
-      <span class="section-tag fun">Now Let's Get To The Fun Part</span>
-      <div class="question-label">1. What are your interests outside of work?</div>
-      <div class="question-hint">Separate each interest with a comma (e.g. basketball, cooking, hiking, music production)</div>
-      <textarea class="text-input" id="inputInterests" rows="3" placeholder="What do you love doing when you're not working?" data-enter-target="btnInterests"></textarea>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('connections')">← Back</button>
-        <button class="btn btn-teal" onclick="saveAndNav('interests','passion')" id="btnInterests" disabled>Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-interests"><div class="card animate-in"><span class="section-tag fun">Now Let's Get To The Fun Part</span><div class="question-label">1. What are your interests outside of work?</div><div class="question-hint">Separate each interest with a comma (e.g. basketball, cooking, hiking)</div><textarea class="text-input" id="inputInterests" rows="3" placeholder="What do you love doing when you're not working?" data-enter-target="btnInterests"></textarea><div class="btn-row"><button class="btn btn-secondary" onclick="nav('connections')">← Back</button><button class="btn btn-teal" onclick="saveField('interests');nav('passion')" id="btnInterests" disabled>Continue →</button></div></div></div>
 
-  <!-- Passion -->
-  <div class="screen" id="screen-passion">
-    <div class="card animate-in">
-      <span class="section-tag fun">Now Let's Get To The Fun Part</span>
-      <div class="question-label">2. Of those interests, which could you spend hours talking about?</div>
-      <div class="question-hint">This helps us find your best conversation matches</div>
-      <textarea class="text-input" id="inputPassion" rows="3" placeholder="What really lights you up?" data-enter-target="btnPassionContinue"></textarea>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('interests')">← Back</button>
-        <button class="btn btn-teal" onclick="saveAndNav('passion','photo')" id="btnPassionContinue">Continue →</button>
-      </div>
-      <div style="text-align:center;"><button class="skip-btn" onclick="state.passion='';navigate('photo')">Skip this question</button></div>
-    </div>
-  </div>
+  <div class="screen" id="screen-passion"><div class="card animate-in"><span class="section-tag fun">Now Let's Get To The Fun Part</span><div class="question-label">2. Of those interests, which could you spend hours talking about?</div><div class="question-hint">This helps us find your best conversation matches</div><textarea class="text-input" id="inputPassion" rows="3" placeholder="What really lights you up?" data-enter-target="btnPassionContinue"></textarea><div class="btn-row"><button class="btn btn-secondary" onclick="nav('interests')">← Back</button><button class="btn btn-teal" onclick="saveField('passion');nav('photo')" id="btnPassionContinue">Continue →</button></div><div style="text-align:center;"><button class="skip-btn" onclick="form.passion='';nav('photo')">Skip this question</button></div></div></div>
 
-  <!-- Photo -->
-  <div class="screen" id="screen-photo">
-    <div class="card animate-in">
-      <span class="section-tag fun">Almost Done!</span>
-      <div class="question-label" style="text-align:center;">Add a profile photo</div>
-      <div class="question-hint" style="text-align:center;">Put a face to the name — it helps build trust.</div>
-      <div class="photo-upload-zone" id="photoZone" onclick="document.getElementById('photoInput').click()">
-        <div class="upload-icon">📷</div>
-        <div class="upload-text">Tap to upload</div>
-      </div>
-      <p class="selfie-note">PS — Selfies are welcome 😉</p>
-      <input type="file" id="photoInput" accept="image/*" style="display:none;">
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('passion')">← Back</button>
-        <button class="btn btn-primary" onclick="navigate('setpassword')" style="flex:2;">Continue →</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-photo"><div class="card animate-in"><span class="section-tag fun">Almost Done!</span><div class="question-label" style="text-align:center;">Add a profile photo</div><div class="question-hint" style="text-align:center;">Put a face to the name — it helps build trust.</div><div class="photo-upload-zone" id="photoZone" onclick="document.getElementById('photoInput').click()"><div style="font-size:32px;color:#c4c8cf;margin-bottom:4px;">📷</div><div style="font-size:12px;color:var(--text-muted);font-weight:500;">Tap to upload</div></div><p class="selfie-note">PS — Selfies are welcome 😉</p><input type="file" id="photoInput" accept="image/*" style="display:none;"><div class="btn-row"><button class="btn btn-secondary" onclick="nav('passion')">← Back</button><button class="btn btn-primary" onclick="nav('setpassword')" style="flex:2;">Continue →</button></div></div></div>
 
-  <!-- Set Password (final step) -->
-  <div class="screen" id="screen-setpassword">
-    <div class="card animate-in">
-      <span class="section-tag about">One Last Thing</span>
-      <div class="question-label">Add a password to finalize your profile</div>
-      <div class="question-hint">This secures your account so you can log back in anytime.</div>
-      <div class="edit-section">
-        <label>Password</label>
-        <input type="password" class="text-input" id="inputPassword" placeholder="Create a password (min 6 characters)" data-enter-target="btnSetPassword">
-        <div class="password-strength"><div class="password-strength-bar" id="pwStrengthBar"></div></div>
-      </div>
-      <div class="edit-section">
-        <label>Confirm Password</label>
-        <input type="password" class="text-input" id="inputPasswordConfirm" placeholder="Confirm your password" data-enter-target="btnSetPassword">
-      </div>
-      <div class="error-text" id="passwordError"></div>
-      <div class="btn-row">
-        <button class="btn btn-secondary" onclick="navigate('photo')">← Back</button>
-        <button class="btn btn-primary" onclick="completeProfile()" id="btnSetPassword" disabled style="flex:2;">Complete My Profile ✓</button>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-setpassword"><div class="card animate-in"><span class="section-tag about">One Last Thing</span><div class="question-label">Add a password to finalize your profile</div><div class="question-hint">This secures your account so you can log back in anytime.</div><div class="edit-section"><label>Password</label><input type="password" class="text-input" id="inputPassword" placeholder="Create a password (min 6 characters)" data-enter-target="btnSetPassword"><div class="password-strength"><div class="password-strength-bar" id="pwStrengthBar"></div></div></div><div class="edit-section"><label>Confirm Password</label><input type="password" class="text-input" id="inputPasswordConfirm" placeholder="Confirm your password" data-enter-target="btnSetPassword"></div><div class="error-text" id="passwordError"></div><div class="btn-row"><button class="btn btn-secondary" onclick="nav('photo')">← Back</button><button class="btn btn-primary" onclick="completeProfile()" id="btnSetPassword" disabled style="flex:2;">Complete My Profile ✓</button></div></div></div>
 
-  <!-- Loading -->
-  <div class="screen" id="screen-loading">
-    <div class="card">
-      <div class="loading-spinner">
-        <div class="spinner-ring"></div>
-        <div class="loading-text" id="loadingText">Building your profile...</div>
-        <div class="loading-sub" id="loadingSub">Setting everything up</div>
-      </div>
-    </div>
-  </div>
+  <div class="screen" id="screen-loading"><div class="card"><div class="loading-spinner"><div class="spinner-ring"></div><div class="loading-text" id="loadingText">Building your profile...</div><div class="loading-sub" id="loadingSub">Setting everything up</div></div></div></div>
 
-  <!-- Dashboard -->
   <div class="screen" id="screen-dashboard">
     <div id="dashboardContent"></div>
     <div class="bottom-nav">
@@ -378,155 +227,51 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- Snapshot overlay -->
-<div class="snapshot-overlay" id="snapshotOverlay" onclick="closeSnapshotOutside(event)">
-  <div class="snapshot-card" id="snapshotCard"></div>
-</div>
-
-<!-- Break warning modal -->
-<div class="modal-overlay" id="breakModal" onclick="if(event.target===this)closeBreakModal()">
-  <div class="modal-card">
-    <div class="modal-icon">⚡</div>
-    <div class="modal-title">You sure you want this many conversations at once?</div>
-    <div class="modal-text">Balancing multiple connections takes effort. Make sure you have the bandwidth!</div>
-    <button class="modal-learn-more" onclick="showLearnMore()">Learn More</button>
-    <div class="btn-row" style="margin-top:20px;">
-      <button class="btn btn-secondary" onclick="closeBreakModal()">Nevermind</button>
-      <button class="btn btn-green" onclick="confirmAccept()">Yes, Accept</button>
-    </div>
-  </div>
-</div>
-
-<!-- Learn More modal -->
-<div class="modal-overlay" id="learnMoreModal" onclick="if(event.target===this)closeLearnMore()">
-  <div class="modal-card">
-    <div class="modal-icon">📖</div>
-    <div class="modal-title">Our Philosophy</div>
-    <div class="modal-text" style="text-align:left;">
-      At NetX, we want to ensure all users are active and engaged. We want to reduce burnout on you but also allow everyone a chance to speak.<br><br>
-      Only accept people if you know you will have the time to message all of them.<br><br>
-      <strong>Ghosting or lack of activity will not be tolerated.</strong>
-    </div>
-    <div class="btn-row" style="margin-top:20px;">
-      <button class="btn btn-primary" style="width:100%;" onclick="closeLearnMore()">Got It</button>
-    </div>
-  </div>
-</div>
-
-<!-- Delete confirm modal -->
-<div class="modal-overlay" id="deleteModal" onclick="if(event.target===this)closeDeleteModal()">
-  <div class="modal-card">
-    <div class="modal-icon">🗑️</div>
-    <div class="modal-title">Delete Your Profile?</div>
-    <div class="modal-text">This action is permanent. Your profile, matches, and messages will be removed from NetX entirely.</div>
-    <div class="edit-section" style="margin-bottom:0;">
-      <label>Type your email to confirm</label>
-      <input type="text" class="text-input" id="deleteConfirmEmail" placeholder="you@example.com">
-    </div>
-    <div class="btn-row" style="margin-top:20px;">
-      <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
-      <button class="btn btn-danger" onclick="confirmDeleteProfile()" style="flex:1;">Delete Forever</button>
-    </div>
-  </div>
-</div>
+<div class="snapshot-overlay" id="snapshotOverlay" onclick="if(event.target===this)closeSnapshot()"><div class="snapshot-card" id="snapshotCard"></div></div>
+<div class="modal-overlay" id="breakModal" onclick="if(event.target===this)closeModal('breakModal')"><div class="modal-card"><div class="modal-icon">⚡</div><div class="modal-title">You sure you want this many conversations at once?</div><div class="modal-text">Balancing multiple connections takes effort. Make sure you have the bandwidth!</div><button class="modal-learn-more" onclick="closeModal('breakModal');openModal('learnMoreModal')">Learn More</button><div class="btn-row" style="margin-top:20px;"><button class="btn btn-secondary" onclick="closeModal('breakModal')">Nevermind</button><button class="btn btn-green" onclick="closeModal('breakModal');doAcceptMatch(pendingIdx)">Yes, Accept</button></div></div></div>
+<div class="modal-overlay" id="learnMoreModal" onclick="if(event.target===this)closeModal('learnMoreModal')"><div class="modal-card"><div class="modal-icon">📖</div><div class="modal-title">Our Philosophy</div><div class="modal-text" style="text-align:left;">At NetX, we want to ensure all users are active and engaged. We want to reduce burnout on you but also allow everyone a chance to speak.<br><br>Only accept people if you know you will have the time to message all of them.<br><br><strong>Ghosting or lack of activity will not be tolerated.</strong></div><div class="btn-row" style="margin-top:20px;"><button class="btn btn-primary" style="width:100%;" onclick="closeModal('learnMoreModal')">Got It</button></div></div></div>
+<div class="modal-overlay" id="deleteModal" onclick="if(event.target===this)closeModal('deleteModal')"><div class="modal-card"><div class="modal-icon">🗑️</div><div class="modal-title">Delete Your Profile?</div><div class="modal-text">This is permanent. Your profile, matches, and messages will be removed.</div><div class="edit-section" style="margin-bottom:0;"><label>Type your email to confirm</label><input type="text" class="text-input" id="deleteConfirmEmail" placeholder="you@example.com"></div><div class="btn-row" style="margin-top:20px;"><button class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button><button class="btn btn-danger" onclick="confirmDelete()" style="flex:1;">Delete Forever</button></div></div></div>
 
 <script>
-// ─── State ───
-const state = { name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null };
-let currentUserMatches=[], acceptedUsers={}, declinedUsers={}, messages=[], pendingAcceptIdx=null, currentScreen='welcome';
+// ─── API helper ───
+const API = '';
+let authToken = localStorage.getItem('netx_token') || null;
+let currentUser = null;
+let currentMatches = [];
+let currentMessages = [];
+let pendingIdx = null;
 
-// ─── Password hashing (simple but secure for MVP — SHA-256) ───
-async function hashPassword(pw) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(pw + 'netx_salt_2026');
-  const hash = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-// ─── Storage (localStorage — works in any browser) ───
-function loadAllUsers() {
-  try { const r = localStorage.getItem('netx-users'); return r ? JSON.parse(r) : []; }
-  catch { return []; }
-}
-function saveAllUsers(users) {
-  try { localStorage.setItem('netx-users', JSON.stringify(users)); } catch(e) { console.error('Save error:',e); }
-}
-function loadSession() {
-  try { const r = localStorage.getItem('netx-session'); return r ? JSON.parse(r) : null; }
-  catch { return null; }
-}
-function saveSession(data) {
-  try { localStorage.setItem('netx-session', JSON.stringify(data)); } catch(e) { console.error('Session error:',e); }
-}
-function clearSession() {
-  try { localStorage.removeItem('netx-session'); } catch(e) {}
+async function api(method, path, body) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (authToken) opts.headers['Authorization'] = 'Bearer ' + authToken;
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(API + path, opts);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
 }
 
-// ─── Interest taxonomy ───
-const interestClusters={sports:['basketball','nba','football','soccer','mma','boxing','running','cycling','sports','golf','baseball','tennis','swimming','volleyball','hockey','wrestling','rugby','cricket','skiing','snowboarding','skateboarding','surfing','fitness','gym','crossfit','weightlifting'],music:['music','music production','hip hop','jazz','rock','concerts','vinyl records','piano','guitar','singing','dj','edm','r&b','country','classical','blues','reggae','pop'],outdoors:['hiking','camping','rock climbing','travel','gardening','bird watching','fishing','kayaking','surfing','backpacking','trail running'],creative:['photography','drawing','painting','street art','writing','manga','anime','design','pottery','crafts','woodworking','knitting'],gaming:['gaming','video games','streaming','esports','board games','card games','dungeons and dragons','chess'],food:['cooking','baking','wine tasting','coffee','nutrition','food','restaurants','grilling','mixology'],wellness:['yoga','meditation','fitness','nutrition','mindfulness','self-improvement'],tech:['coding','tech gadgets','3d printing','robotics','ai','vr','crypto'],pets:['dogs','cats','pets','horses','aquariums'],reading:['reading','books','podcasts','audiobooks','comics']};
-function getCluster(i){const l=i.toLowerCase().trim();for(const[c,kw]of Object.entries(interestClusters)){if(kw.includes(l))return c;}return null;}
-function getClusters(arr){const s=new Set();arr.forEach(i=>{const c=getCluster(i);if(c)s.add(c);});return s;}
+// ─── Form state ───
+const form = { name:'', email:'', career:'', focus:'', connections:[], interests:[], passion:'', photoData:null, password:'' };
 
-// ─── Matching ───
-function computeMatches(user,pool){
-  const ui=user.interests.map(i=>i.toLowerCase().trim()),uc=getClusters(ui);
-  const up=user.passion?user.passion.toLowerCase().trim():'',pc=getCluster(up);
-  return pool.filter(c=>c.id!==user.id).map(cand=>{
-    let score=0,reasons=[];
-    const ci=cand.interests.map(i=>i.toLowerCase().trim()),cc=getClusters(ci);
-    const dm=ui.filter(i=>ci.includes(i));
-    score+=dm.length*30;
-    if(dm.length>0)reasons.push(`You both love ${dm.slice(0,2).join(' & ')}`);
-    if(up&&ci.includes(up)){score+=25;if(!dm.includes(up))reasons.push(`Shares your passion for ${up}`);}
-    const co=[...uc].filter(c=>cc.has(c));
-    score+=co.length*18;
-    if(reasons.length===0&&co.length>0){
-      const cn=co[0],ti=ci.find(i=>getCluster(i)===cn)||cn,yi=ui.find(i=>getCluster(i)===cn)||cn;
-      reasons.push(ti!==yi?`You like ${yi}, they like ${ti}`:`Similar interests in ${cn}`);
-    }
-    if(pc&&cc.has(pc))score+=15;
-    const go=user.connections.filter(c=>cand.connections.includes(c));
-    score+=go.length*8;
-    if(reasons.length===0&&go.length>0)reasons.push(`Both looking for ${go[0].toLowerCase()}`);
-    if(user.career===cand.career)score+=3;
-    const co2=['Student','Early Career','Mid Career','Late Career'],uI=co2.indexOf(user.career),cI=co2.indexOf(cand.career);
-    if(user.connections.includes('Mentorship')&&cand.connections.includes('Mentorship')&&Math.abs(uI-cI)>=2){score+=10;reasons.push('Great mentorship pairing');}
-    return{...cand,score:Math.min(score,99),reasons:reasons.length?reasons:['Part of the NetX community']};
-  }).sort((a,b)=>b.score-a.score).slice(0,5);
-}
+// ─── Navigation ───
+let currentScreen = 'welcome';
+const stepLabels = {name:'Your Name',email:'Your Email',career:'Career Status',focus:'Your Focus',connections:'Connection Goals',interests:'Your Interests',passion:'Your Passions',photo:'Profile Photo',setpassword:'Set Password'};
 
-// ─── Smart prompt ───
-function generateSmartPrompt(user,match){
-  const ui=user.interests.map(i=>i.toLowerCase().trim()),mi=match.interests.map(i=>i.toLowerCase().trim());
-  const d=ui.filter(i=>mi.includes(i));
-  if(d.length>0){const s=d[0];const p=[`You both enjoy ${s} — ask them what got them into it!`,`${s} is a shared interest. What's their favorite thing about it?`,`Since you both like ${s}, ask them for a recommendation!`];return p[Math.floor(Math.random()*p.length)];}
-  const uc=getClusters(ui),mc=getClusters(mi),sc=[...uc].filter(c=>mc.has(c));
-  if(sc.length>0){const c=sc[0],ti=mi.find(i=>getCluster(i)===c)||c,yi=ui.find(i=>getCluster(i)===c)||c;return`You're into ${yi} and they're into ${ti} — maybe ask them what's their favorite part about it?`;}
-  const sg=user.connections.filter(c=>match.connections.includes(c));
-  if(sg.length>0)return`You're both looking for ${sg[0].toLowerCase()}. Start by sharing what you're currently working on!`;
-  return`Start by asking what they're most excited about right now — you might find unexpected common ground!`;
-}
-
-// ─── Notifications ───
-function sendNotificationEmail(email,matchName){console.log(`%c[NetX Email]%c → To: ${email} | "You matched with ${matchName} on NetX!"`,'color:#ff9149;font-weight:bold','color:inherit');}
-function sendDMNotificationEmail(email,sender,preview){console.log(`%c[NetX DM Email]%c → To: ${email} | From: ${sender} | "${preview.slice(0,60)}"`,'color:#0097b2;font-weight:bold','color:inherit');}
-
-// ─── Navigation (History API) ───
-const stepLabels={name:'Your Name',email:'Your Email',career:'Career Status',focus:'Your Focus',connections:'Connection Goals',interests:'Your Interests',passion:'Your Passions',photo:'Profile Photo',setpassword:'Set Password'};
-function navigate(screen,push=true){
+function nav(screen, push=true) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  const el=document.getElementById('screen-'+screen);
-  if(!el)return;
+  const el = document.getElementById('screen-'+screen);
+  if(!el) return;
   el.classList.add('active');
   el.querySelector('.card,.loading-spinner')?.classList.add('animate-in');
-  currentScreen=screen;
+  currentScreen = screen;
   updateProgress();
-  if(push)history.pushState({screen},'','#'+screen);
+  if(push) history.pushState({screen},'','#'+screen);
 }
-window.addEventListener('popstate',e=>{if(e.state&&e.state.screen)navigate(e.state.screen,false);});
+window.addEventListener('popstate', e => { if(e.state?.screen) nav(e.state.screen, false); });
 history.replaceState({screen:'welcome'},'','#welcome');
 
-function updateProgress(){
+function updateProgress() {
   const ss=['name','email','career','focus','connections','interests','passion','photo','setpassword'];
   const idx=ss.indexOf(currentScreen);
   if(idx<0){document.getElementById('progressWrapper').style.display='none';return;}
@@ -536,50 +281,31 @@ function updateProgress(){
   document.getElementById('progressSteps').innerHTML=h;
 }
 
-// ─── Save & navigate ───
-function saveAndNav(from,to){
-  if(from==='name')state.name=document.getElementById('inputName').value.trim();
-  if(from==='email'){
-    state.email=document.getElementById('inputEmail').value.trim();
-    if(checkEmailExists(state.email)){
-      document.getElementById('emailExistsError').style.display='block';
-      return;
-    }
-    document.getElementById('emailExistsError').style.display='none';
-    navigate(to);
-    return;
-  }
-  if(from==='focus')state.focus=document.getElementById('inputFocus').value.trim();
-  if(from==='interests')state.interests=document.getElementById('inputInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
-  if(from==='passion')state.passion=document.getElementById('inputPassion').value.trim();
-  navigate(to);
+function saveField(field) {
+  if(field==='name') form.name=document.getElementById('inputName').value.trim();
+  if(field==='focus') form.focus=document.getElementById('inputFocus').value.trim();
+  if(field==='interests') form.interests=document.getElementById('inputInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(field==='passion') form.passion=document.getElementById('inputPassion').value.trim();
 }
 
-function checkEmailExists(email){
-  const users=loadAllUsers();
-  return users.some(u=>u.email.toLowerCase()===email.toLowerCase());
+async function checkEmailAndContinue() {
+  form.email = document.getElementById('inputEmail').value.trim();
+  try {
+    const r = await api('GET', '/api/check-email?email=' + encodeURIComponent(form.email));
+    if(r.exists) { document.getElementById('emailExistsError').style.display='block'; return; }
+  } catch(e) {}
+  document.getElementById('emailExistsError').style.display='none';
+  nav('career');
 }
-
-// ─── Enter key ───
-document.addEventListener('keydown',e=>{
-  if(e.key!=='Enter')return;
-  const dm=document.querySelector('.dm-input:focus');
-  if(dm){e.preventDefault();sendDM(parseInt(dm.id.replace('dmInput-','')));return;}
-  const f=document.activeElement;
-  if(f&&f.dataset.enterTarget){
-    if(f.tagName==='TEXTAREA'&&!e.shiftKey){e.preventDefault();const b=document.getElementById(f.dataset.enterTarget);if(b&&!b.disabled)b.click();}
-    else if(f.tagName==='INPUT'){e.preventDefault();const b=document.getElementById(f.dataset.enterTarget);if(b&&!b.disabled)b.click();}
-  }
-});
 
 // ─── Chips ───
-function setupChips(cid,multi,sk,bid){
+function setupChips(cid,multi,key,bid){
   document.getElementById(cid).querySelectorAll('.option-chip').forEach(chip=>{
     chip.addEventListener('click',()=>{
       const cont=document.getElementById(cid);
-      if(multi){chip.classList.toggle('selected');state[sk]=[...cont.querySelectorAll('.option-chip.selected')].map(c=>c.dataset.value);}
-      else{cont.querySelectorAll('.option-chip').forEach(c=>c.classList.remove('selected'));chip.classList.add('selected');state[sk]=chip.dataset.value;}
-      document.getElementById(bid).disabled=multi?state[sk].length===0:!state[sk];
+      if(multi){chip.classList.toggle('selected');form[key]=[...cont.querySelectorAll('.option-chip.selected')].map(c=>c.dataset.value);}
+      else{cont.querySelectorAll('.option-chip').forEach(c=>c.classList.remove('selected'));chip.classList.add('selected');form[key]=chip.dataset.value;}
+      document.getElementById(bid).disabled=multi?form[key].length===0:!form[key];
     });
   });
 }
@@ -588,76 +314,66 @@ setupChips('connectionOptions',true,'connections','btnConnections');
 
 // ─── Validation ───
 document.getElementById('inputName').addEventListener('input',e=>{document.getElementById('btnName').disabled=!e.target.value.trim();});
-document.getElementById('inputEmail').addEventListener('input',e=>{
-  const v=e.target.value.trim();
-  document.getElementById('btnEmail').disabled=!v||!v.includes('@')||!v.includes('.');
-  document.getElementById('emailExistsError').style.display='none';
-});
+document.getElementById('inputEmail').addEventListener('input',e=>{const v=e.target.value.trim();document.getElementById('btnEmail').disabled=!v||!v.includes('@')||!v.includes('.');document.getElementById('emailExistsError').style.display='none';});
 document.getElementById('inputFocus').addEventListener('input',e=>{document.getElementById('btnFocus').disabled=!e.target.value.trim();});
 document.getElementById('inputInterests').addEventListener('input',e=>{document.getElementById('btnInterests').disabled=!e.target.value.trim();});
 
-// ─── Password validation ───
 function validatePasswords(){
   const pw=document.getElementById('inputPassword').value;
   const pc=document.getElementById('inputPasswordConfirm').value;
   const err=document.getElementById('passwordError');
   if(pw.length<6){err.textContent='Password must be at least 6 characters.';err.style.display='block';document.getElementById('btnSetPassword').disabled=true;return false;}
-  if(pw!==pc){err.textContent='Passwords do not match.';err.style.display='block';document.getElementById('btnSetPassword').disabled=true;return false;}
-  err.style.display='none';
-  document.getElementById('btnSetPassword').disabled=false;
-  return true;
+  if(pw!==pc&&pc.length>0){err.textContent='Passwords do not match.';err.style.display='block';document.getElementById('btnSetPassword').disabled=true;return false;}
+  if(pc.length===0){document.getElementById('btnSetPassword').disabled=true;return false;}
+  err.style.display='none';document.getElementById('btnSetPassword').disabled=false;return true;
 }
-document.getElementById('inputPassword').addEventListener('input',e=>{
-  validatePasswords();
-  // Strength bar
-  const pw=e.target.value;
-  const bar=document.getElementById('pwStrengthBar');
-  let strength=0;
-  if(pw.length>=6)strength++;if(pw.length>=10)strength++;if(/[A-Z]/.test(pw))strength++;if(/[0-9]/.test(pw))strength++;if(/[^a-zA-Z0-9]/.test(pw))strength++;
-  const pct=Math.min(strength/4*100,100);
-  const colors=['#ef4444','#f59e0b','#f59e0b','#10b981','#10b981'];
-  bar.style.width=pct+'%';
-  bar.style.background=colors[Math.min(strength,4)];
-});
+document.getElementById('inputPassword').addEventListener('input',e=>{validatePasswords();const pw=e.target.value;const bar=document.getElementById('pwStrengthBar');let s=0;if(pw.length>=6)s++;if(pw.length>=10)s++;if(/[A-Z]/.test(pw))s++;if(/[0-9]/.test(pw))s++;if(/[^a-zA-Z0-9]/.test(pw))s++;const pct=Math.min(s/4*100,100);const colors=['#ef4444','#f59e0b','#f59e0b','#10b981','#10b981'];bar.style.width=pct+'%';bar.style.background=colors[Math.min(s,4)];});
 document.getElementById('inputPasswordConfirm').addEventListener('input',validatePasswords);
 
-// ─── Photo ───
+// ─── Photo upload ───
 document.getElementById('photoInput').addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=()=>{state.photoData=r.result;document.getElementById('photoZone').innerHTML=`<img src="${r.result}" alt="Profile photo">`;};
+  r.onload=()=>{form.photoData=r.result;document.getElementById('photoZone').innerHTML=`<img src="${r.result}" alt="Photo" style="width:100%;height:100%;object-fit:cover;">`;};
   r.readAsDataURL(f);
 });
 
-// ─── Complete profile (create account) ───
+// ─── Enter key ───
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const dm=document.querySelector('.dm-input:focus');
+  if(dm){e.preventDefault();const idx=dm.id.replace('dmInput-','');sendDM(parseInt(idx));return;}
+  const f=document.activeElement;
+  if(f?.dataset?.enterTarget){
+    if(f.tagName==='TEXTAREA'&&!e.shiftKey){e.preventDefault();const b=document.getElementById(f.dataset.enterTarget);if(b&&!b.disabled)b.click();}
+    else if(f.tagName==='INPUT'){e.preventDefault();const b=document.getElementById(f.dataset.enterTarget);if(b&&!b.disabled)b.click();}
+  }
+});
+
+// ─── Complete profile (register) ───
 async function completeProfile(){
   if(!validatePasswords())return;
-  const pw=document.getElementById('inputPassword').value;
-  const pwHash=await hashPassword(pw);
-
-  navigate('loading');
+  form.password=document.getElementById('inputPassword').value;
+  nav('loading');
   const msgs=[['Building your profile...','Setting everything up'],['Securing your account...','Encrypting credentials'],['Almost ready!','Finalizing your experience']];
   let step=0;
   const iv=setInterval(()=>{step++;if(step<msgs.length){document.getElementById('loadingText').textContent=msgs[step][0];document.getElementById('loadingSub').textContent=msgs[step][1];}},800);
 
-  state.id='user_'+Date.now();
-  const userData={...state, passwordHash:pwHash, acceptedUsers:{}, declinedUsers:{}, messages:[]};
-
-  const allUsers=loadAllUsers();
-  allUsers.push(userData);
-  saveAllUsers(allUsers);
-  saveSession({id:state.id,email:state.email});
-
-  acceptedUsers={};declinedUsers={};messages=[];
-
-  setTimeout(()=>{
+  try {
+    const data = await api('POST','/api/register', form);
+    authToken = data.token;
+    localStorage.setItem('netx_token', authToken);
+    currentUser = data.user;
+    currentMatches = data.matches || [];
+    currentMessages = [];
     clearInterval(iv);
-    const pool=loadAllUsers();
-    currentUserMatches=computeMatches(state,pool);
-    if(currentUserMatches.length>0)currentUserMatches.forEach(m=>sendNotificationEmail(state.email,m.name));
     renderDashboard();
-    navigate('dashboard');
-  },2500);
+    nav('dashboard');
+  } catch(e) {
+    clearInterval(iv);
+    alert('Registration failed: ' + e.message);
+    nav('setpassword');
+  }
 }
 
 // ─── Login ───
@@ -666,116 +382,92 @@ async function doLogin(){
   const pw=document.getElementById('loginPassword').value;
   const err=document.getElementById('loginError');
   if(!email||!pw){err.textContent='Please enter both email and password.';err.style.display='block';return;}
-  const pwHash=await hashPassword(pw);
-  const allUsers=loadAllUsers();
-  const user=allUsers.find(u=>u.email.toLowerCase()===email.toLowerCase()&&u.passwordHash===pwHash);
-  if(!user){err.textContent='Invalid email or password.';err.style.display='block';return;}
-  err.style.display='none';
-
-  // Load user into state
-  Object.assign(state,{name:user.name,email:user.email,career:user.career,focus:user.focus,connections:user.connections,interests:user.interests,passion:user.passion,photoData:user.photoData,id:user.id});
-  acceptedUsers=user.acceptedUsers||{};
-  declinedUsers=user.declinedUsers||{};
-  messages=user.messages||[];
-
-  saveSession({id:state.id,email:state.email});
-
-  const pool=loadAllUsers();
-  currentUserMatches=computeMatches(state,pool);
-  renderDashboard();
-  navigate('dashboard');
+  try {
+    const data = await api('POST','/api/login',{email,password:pw});
+    authToken = data.token;
+    localStorage.setItem('netx_token', authToken);
+    currentUser = data.user;
+    currentMatches = data.matches || [];
+    currentMessages = data.messages || [];
+    err.style.display='none';
+    renderDashboard();
+    nav('dashboard');
+  } catch(e) {
+    err.textContent = e.message;
+    err.style.display='block';
+  }
 }
 
 // ─── Logout ───
-function doLogout(){
-  persistUserData();
-  clearSession();
-  Object.assign(state,{name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null});
-  acceptedUsers={};declinedUsers={};messages=[];currentUserMatches=[];
-  // Reset form fields
-  document.getElementById('inputName').value='';
-  document.getElementById('inputEmail').value='';
-  document.getElementById('inputFocus').value='';
-  document.getElementById('inputInterests').value='';
-  document.getElementById('inputPassion').value='';
-  document.getElementById('inputPassword').value='';
-  document.getElementById('inputPasswordConfirm').value='';
-  document.getElementById('loginEmail').value='';
-  document.getElementById('loginPassword').value='';
-  document.getElementById('photoZone').innerHTML='<div class="upload-icon">📷</div><div class="upload-text">Tap to upload</div>';
-  document.querySelectorAll('.option-chip.selected').forEach(c=>c.classList.remove('selected'));
-  ['btnName','btnEmail','btnCareer','btnFocus','btnConnections','btnInterests','btnSetPassword'].forEach(id=>{const b=document.getElementById(id);if(b)b.disabled=true;});
-  navigate('welcome');
+async function doLogout(){
+  try { await api('POST','/api/logout'); } catch(e){}
+  authToken=null;localStorage.removeItem('netx_token');
+  currentUser=null;currentMatches=[];currentMessages=[];
+  nav('welcome');
 }
 
-// ─── Persist user data (accepted, declined, messages) ───
-function persistUserData(){
-  if(!state.id)return;
-  const allUsers=loadAllUsers();
-  const idx=allUsers.findIndex(u=>u.id===state.id);
-  if(idx>=0){
-    allUsers[idx]={...allUsers[idx],...state,acceptedUsers,declinedUsers,messages};
-    saveAllUsers(allUsers);
-  }
+// ─── Refresh data ───
+async function refreshData(){
+  try {
+    const data = await api('GET','/api/me');
+    currentUser=data.user; currentMatches=data.matches||[]; currentMessages=data.messages||[];
+  } catch(e){ console.error('Refresh failed:',e); }
 }
 
-// ─── Delete profile ───
-function openDeleteModal(){document.getElementById('deleteModal').classList.add('open');document.getElementById('deleteConfirmEmail').value='';}
-function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');}
-function confirmDeleteProfile(){
-  const confirmEmail=document.getElementById('deleteConfirmEmail').value.trim();
-  if(confirmEmail.toLowerCase()!==state.email.toLowerCase()){alert('Email does not match. Please type your email to confirm deletion.');return;}
-  const allUsers=loadAllUsers();
-  const filtered=allUsers.filter(u=>u.id!==state.id);
-  saveAllUsers(filtered);
-  clearSession();
-  closeDeleteModal();
-  closeSnapshot();
-  Object.assign(state,{name:'',email:'',career:'',focus:'',connections:[],interests:[],passion:'',photoData:null,id:null});
-  acceptedUsers={};declinedUsers={};messages=[];currentUserMatches=[];
-  navigate('welcome');
+// ─── Smart prompt ───
+function generatePrompt(match){
+  const ui=(currentUser.interests||[]).map(i=>i.toLowerCase().trim());
+  const mi=(match.interests||[]).map(i=>i.toLowerCase().trim());
+  const d=ui.filter(i=>mi.includes(i));
+  if(d.length>0){const s=d[0];const p=[`You both enjoy ${s} — ask them what got them into it!`,`${s} is a shared interest. What's their favorite thing about it?`,`Since you both like ${s}, ask them for a recommendation!`];return p[Math.floor(Math.random()*p.length)];}
+  const cats={sports:['basketball','nba','football','soccer','mma','boxing','running','cycling','sports','golf','baseball','tennis','fitness','gym'],music:['music','music production','hip hop','jazz','rock','concerts','piano','guitar'],outdoors:['hiking','camping','rock climbing','travel','gardening'],creative:['photography','drawing','painting','writing','anime','design'],gaming:['gaming','video games','streaming','esports'],food:['cooking','baking','wine tasting','coffee']};
+  function gc(i){for(const[c,kw]of Object.entries(cats)){if(kw.includes(i))return c;}return null;}
+  const uc=new Set(ui.map(gc).filter(Boolean)),mc=new Set(mi.map(gc).filter(Boolean));
+  const sc=[...uc].filter(c=>mc.has(c));
+  if(sc.length>0){const c=sc[0],ti=mi.find(i=>gc(i)===c)||c,yi=ui.find(i=>gc(i)===c)||c;return`You're into ${yi} and they're into ${ti} — ask them what their favorite part about it is!`;}
+  return`Start by asking what they're most excited about right now!`;
 }
 
-// ─── Recompute matches ───
-function recomputeMatches(){
-  const pool=loadAllUsers();
-  currentUserMatches=computeMatches(state,pool);
-  acceptedUsers={};declinedUsers={};
-  persistUserData();
-}
-
-// ─── Render Dashboard ───
+// ─── Render dashboard ───
 function renderDashboard(){
-  const container=document.getElementById('dashboardContent');
+  const u=currentUser;
   const sc={'Early Career':'background:var(--orange-light);color:var(--orange-dark);','Mid Career':'background:var(--teal-light);color:var(--teal-dark);','Late Career':'background:#f3e8ff;color:#7c3aed;','Student':'background:#ecfdf5;color:#059669;'};
-  const av=state.photoData?`<img src="${state.photoData}" class="profile-avatar" alt="Profile">`:`<div class="profile-avatar-placeholder">${state.name.charAt(0).toUpperCase()}</div>`;
-  const it=state.interests.map(i=>`<span class="profile-tag orange">${i}</span>`).join('');
-  const ct=state.connections.map(c=>`<span class="profile-tag teal">${c}</span>`).join('');
-  const hm=currentUserMatches.length>0;
+  const av=u.photoData?`<img src="${u.photoData}" class="profile-avatar" alt="Profile">`:`<div class="profile-avatar-placeholder">${u.name.charAt(0).toUpperCase()}</div>`;
+  const it=(u.interests||[]).map(i=>`<span class="profile-tag orange">${i}</span>`).join('');
+  const ct=(u.connections||[]).map(c=>`<span class="profile-tag teal">${c}</span>`).join('');
+  const hm=currentMatches.length>0;
+  const accepted=u.acceptedUsers||{};
+  const declined=u.declinedUsers||{};
+
   let mc='';
   if(hm){
-    mc=currentUserMatches.map((m,i)=>{
-      const ia=acceptedUsers[m.id],id=declinedUsers[m.id];
-      const ai=m.photoData?`<img src="${m.photoData}" alt="${m.name}">`:m.name.split(' ').map(n=>n[0]).join('');
+    mc=currentMatches.map((m,i)=>{
+      const ia=accepted[m.id],id=declined[m.id];
+      const ai=m.photoData?`<img src="${m.photoData}" alt="">`:(m.name||'?').split(' ').map(n=>n[0]).join('');
       return`<div class="match-card ${id?'declined':''}" onclick="openSnapshot(${i})"><div class="match-avatar">${ai}</div><div class="match-info"><div class="match-name">${m.name}</div><div class="match-reason">${m.reasons[0]}${m.reasons[1]?' · '+m.reasons[1]:''}</div>${ia?'<span class="match-accepted-badge">✓ Connected</span>':''}</div></div>`;
     }).join('');
   } else {
-    mc=`<div class="waiting-illustration"><div class="waiting-icon">🌱</div><div class="waiting-title">You're Early!</div><div class="waiting-text">Thank you so much for trying NetX, please be patient while we gather more people. You will be notified once you receive a match!</div><div class="notification-badge"><span>✉️</span> We'll email you at <strong style="margin-left:4px;">${state.email}</strong></div></div>`;
+    mc=`<div class="waiting-illustration"><div class="waiting-icon">🌱</div><div class="waiting-title">You're Early!</div><div class="waiting-text">Thank you so much for trying NetX, please be patient while we gather more people. You will be notified once you receive a match!</div><div class="notification-badge"><span>✉️</span> We'll email you at <strong style="margin-left:4px;">${u.email}</strong></div></div>`;
   }
-  const mg=messages.length>0?messages.map(m=>`<div style="background:white;border-radius:14px;padding:16px 20px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.06);"><div style="font-weight:600;font-size:14px;margin-bottom:4px;">To: ${m.to}</div><div style="font-size:14px;color:var(--text);line-height:1.5;">${m.text}</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">${m.time}</div></div>`).join(''):`<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">💬</div>No messages yet.<br>Accept a match to start a conversation!</div>`;
-  container.innerHTML=`
+
+  const mg=currentMessages.length>0?currentMessages.sort((a,b)=>new Date(b.time)-new Date(a.time)).map(m=>{
+    const isSent=m.fromId===u.id;
+    return`<div class="msg-thread"><div class="msg-direction ${isSent?'sent':'received'}">${isSent?'Sent to '+m.toName:'From '+m.fromName}</div><div style="font-size:14px;color:var(--text);line-height:1.5;">${m.text}</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">${new Date(m.time).toLocaleString()}</div></div>`;
+  }).join(''):`<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;"><div style="font-size:32px;margin-bottom:12px;">💬</div>No messages yet.<br>Accept a match to start a conversation!</div>`;
+
+  document.getElementById('dashboardContent').innerHTML=`
     <div id="view-profile"><div class="card animate-in" style="margin-bottom:16px;">
-      <div class="profile-header">${av}<div class="profile-name">${state.name}</div><span class="profile-status-badge" style="${sc[state.career]||''}">${state.career}</span></div>
-      <div class="profile-section"><div class="profile-section-title">Email</div><div class="profile-text">${state.email}</div></div>
-      <div class="profile-section"><div class="profile-section-title">Currently Focused On</div><div class="profile-text">${state.focus}</div></div>
+      <div class="profile-header">${av}<div class="profile-name">${u.name}</div><span class="profile-status-badge" style="${sc[u.career]||''}">${u.career}</span></div>
+      <div class="profile-section"><div class="profile-section-title">Email</div><div class="profile-text">${u.email}</div></div>
+      <div class="profile-section"><div class="profile-section-title">Currently Focused On</div><div class="profile-text">${u.focus}</div></div>
       <div class="profile-section"><div class="profile-section-title">Interests</div><div class="profile-tags">${it}</div></div>
-      ${state.passion?`<div class="profile-section"><div class="profile-section-title">Could Talk About For Hours</div><div class="profile-text">${state.passion}</div></div>`:''}
+      ${u.passion?`<div class="profile-section"><div class="profile-section-title">Could Talk About For Hours</div><div class="profile-text">${u.passion}</div></div>`:''}
       <div class="profile-section"><div class="profile-section-title">Looking For</div><div class="profile-tags">${ct}</div></div>
       <div class="profile-actions">
         <button class="btn btn-secondary" style="width:100%;" onclick="openEditProfile()">✏️ Edit Profile</button>
         <button class="btn btn-logout" style="width:100%;" onclick="doLogout()">Log Out</button>
         <hr class="divider">
-        <button class="btn btn-danger" style="width:100%;" onclick="openDeleteModal()">🗑️ Delete Profile</button>
+        <button class="btn btn-danger" style="width:100%;" onclick="openModal('deleteModal')">🗑️ Delete Profile</button>
       </div>
     </div></div>
     <div id="view-matches" style="display:none;"><div class="animate-in"><div class="matches-header"><h2>${hm?'Your Top Matches':'Matches'}</h2><p style="color:var(--text-muted);font-size:14px;">${hm?'Based on your interests & goals':'Waiting for the community to grow'}</p></div>${mc}</div></div>
@@ -788,14 +480,21 @@ function showTab(tab){
   document.getElementById('view-profile').style.display=tab==='profile'?'block':'none';
   document.getElementById('view-matches').style.display=tab==='matches'?'block':'none';
   document.getElementById('view-messages').style.display=tab==='messages'?'block':'none';
+  if(tab==='messages'||tab==='matches') refreshData().then(renderDashboard).then(()=>{
+    document.getElementById('view-profile').style.display=tab==='profile'?'block':'none';
+    document.getElementById('view-matches').style.display=tab==='matches'?'block':'none';
+    document.getElementById('view-messages').style.display=tab==='messages'?'block':'none';
+  });
 }
 
 // ─── Snapshot ───
 function openSnapshot(idx){
-  const m=currentUserMatches[idx];if(!m)return;
-  const ia=acceptedUsers[m.id],pr=generateSmartPrompt(state,m);
-  const it=m.interests.map(i=>`<span class="profile-tag orange">${i}</span>`).join('');
-  const ai=m.photoData?`<img src="${m.photoData}" alt="${m.name}">`:m.name.split(' ').map(n=>n[0]).join('');
+  const m=currentMatches[idx];if(!m)return;
+  const accepted=currentUser.acceptedUsers||{};
+  const ia=accepted[m.id];
+  const pr=generatePrompt(m);
+  const it=(m.interests||[]).map(i=>`<span class="profile-tag orange">${i}</span>`).join('');
+  const ai=m.photoData?`<img src="${m.photoData}" alt="">`:(m.name||'?').split(' ').map(n=>n[0]).join('');
   document.getElementById('snapshotCard').innerHTML=`
     <button class="snapshot-close" onclick="closeSnapshot()">✕</button>
     <div class="snapshot-avatar">${ai}</div><div class="snapshot-name">${m.name}</div>
@@ -803,93 +502,106 @@ function openSnapshot(idx){
     ${m.passion?`<div class="profile-section"><div class="profile-section-title">Could Talk About For Hours</div><div class="profile-text">${m.passion}</div></div>`:''}
     <div class="smart-prompt"><span class="smart-prompt-icon">💡</span><div class="smart-prompt-label">Conversation Starter</div><div class="smart-prompt-text">${pr}</div></div>
     ${ia?`<div class="dm-panel open"><div id="dmForm-${idx}"><div style="font-size:13px;color:var(--green);font-weight:600;margin-bottom:12px;">✓ Connected — Send a message!</div><div class="dm-input-row"><input type="text" class="dm-input" id="dmInput-${idx}" placeholder="Type your message..."><button class="dm-send" onclick="sendDM(${idx})">Send</button></div></div><div class="dm-sent-confirmation" id="dmSent-${idx}">✓ Message sent to ${m.name}!</div></div>`:
-    `<div class="snapshot-actions"><button class="btn btn-decline" onclick="declineMatch(${idx})">✕ Decline</button><button class="btn btn-green" onclick="tryAcceptMatch(${idx})">✓ Accept</button></div>`}`;
+    `<div class="snapshot-actions"><button class="btn btn-decline" onclick="declineMatch(${idx})">✕ Decline</button><button class="btn btn-green" onclick="tryAccept(${idx})">✓ Accept</button></div>`}`;
   document.getElementById('snapshotOverlay').classList.add('open');
 }
 function closeSnapshot(){document.getElementById('snapshotOverlay').classList.remove('open');}
-function closeSnapshotOutside(e){if(e.target===document.getElementById('snapshotOverlay'))closeSnapshot();}
 
-// ─── Accept/decline with break ───
-function getAcceptedCount(){return Object.keys(acceptedUsers).length;}
-function tryAcceptMatch(idx){if(getAcceptedCount()>=2){pendingAcceptIdx=idx;document.getElementById('breakModal').classList.add('open');}else doAcceptMatch(idx);}
-function doAcceptMatch(idx){
-  const m=currentUserMatches[idx];acceptedUsers[m.id]=true;
-  sendNotificationEmail(m.email||'user@netx.com',state.name);
-  persistUserData();
-  openSnapshot(idx);renderDashboard();showTab('matches');
+// ─── Accept/Decline ───
+function tryAccept(idx){
+  const accepted=currentUser.acceptedUsers||{};
+  if(Object.keys(accepted).length>=2){pendingIdx=idx;openModal('breakModal');}
+  else doAcceptMatch(idx);
 }
-function confirmAccept(){closeBreakModal();if(pendingAcceptIdx!==null){doAcceptMatch(pendingAcceptIdx);pendingAcceptIdx=null;}}
-function declineMatch(idx){const m=currentUserMatches[idx];declinedUsers[m.id]=true;persistUserData();closeSnapshot();renderDashboard();showTab('matches');}
-function closeBreakModal(){document.getElementById('breakModal').classList.remove('open');}
-function showLearnMore(){closeBreakModal();document.getElementById('learnMoreModal').classList.add('open');}
-function closeLearnMore(){document.getElementById('learnMoreModal').classList.remove('open');}
+async function doAcceptMatch(idx){
+  const m=currentMatches[idx];
+  try{await api('POST','/api/accept',{matchId:m.id});}catch(e){console.error(e);}
+  await refreshData();
+  renderDashboard();showTab('matches');openSnapshot(idx);
+}
+async function declineMatch(idx){
+  const m=currentMatches[idx];
+  try{await api('POST','/api/decline',{matchId:m.id});}catch(e){console.error(e);}
+  await refreshData();
+  closeSnapshot();renderDashboard();showTab('matches');
+}
 
-// ─── DM ───
-function sendDM(idx){
-  const m=currentUserMatches[idx];const input=document.getElementById('dmInput-'+idx);const text=input.value.trim();if(!text)return;
-  messages.push({to:m.name,text,time:new Date().toLocaleString()});
-  sendDMNotificationEmail(m.email||'user@netx.com',state.name,text);
-  persistUserData();
+// ─── Send DM ───
+async function sendDM(idx){
+  const m=currentMatches[idx];
+  const input=document.getElementById('dmInput-'+idx);
+  const text=input.value.trim();
+  if(!text)return;
+  try{await api('POST','/api/message',{toId:m.id,text});}catch(e){alert('Failed to send: '+e.message);return;}
   document.getElementById('dmForm-'+idx).style.display='none';
   document.getElementById('dmSent-'+idx).style.display='block';
+  await refreshData();
   renderDashboard();showTab('matches');openSnapshot(idx);
 }
 
 // ─── Edit Profile ───
 function openEditProfile(){
+  const u=currentUser;
   const connOpts=['Mentorship','Career advice','Job opportunities','Collaboration','Just meeting interesting people'];
   const careerOpts=['Early Career','Mid Career','Late Career','Student'];
-  const cc=connOpts.map(c=>`<div class="edit-chip ${state.connections.includes(c)?'selected':''}" data-value="${c}" onclick="toggleEditChip(this)">${c}</div>`).join('');
-  const ck=careerOpts.map(c=>`<div class="edit-chip ${state.career===c?'selected':''}" data-value="${c}" onclick="selectEditChip(this)">${c}</div>`).join('');
-  const ai=state.photoData?`<img src="${state.photoData}" alt="Photo">`:`<div style="font-size:28px;color:#c4c8cf;">📷</div>`;
+  const cc=connOpts.map(c=>`<div class="edit-chip ${(u.connections||[]).includes(c)?'selected':''}" data-value="${c}" onclick="this.classList.toggle('selected')">${c}</div>`).join('');
+  const ck=careerOpts.map(c=>`<div class="edit-chip ${u.career===c?'selected':''}" data-value="${c}" onclick="this.parentElement.querySelectorAll('.edit-chip').forEach(c=>c.classList.remove('selected'));this.classList.add('selected')">${c}</div>`).join('');
+  const ai=u.photoData?`<img src="${u.photoData}" alt="Photo">`:`<div style="font-size:28px;color:#c4c8cf;">📷</div>`;
   document.getElementById('snapshotCard').innerHTML=`
     <button class="snapshot-close" onclick="closeSnapshot()">✕</button>
     <div style="text-align:center;margin-bottom:20px;"><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">Edit Profile</div></div>
-    <div class="edit-section" style="text-align:center;"><div class="edit-photo-zone" onclick="document.getElementById('editPhotoInput').click()">${ai}</div><div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">Tap to change photo</div><input type="file" id="editPhotoInput" accept="image/*" style="display:none;" onchange="handleEditPhoto(event)"></div>
-    <div class="edit-section"><label>Name</label><input type="text" class="text-input" id="editName" value="${state.name}"></div>
+    <div class="edit-section" style="text-align:center;"><div class="edit-photo-zone" onclick="document.getElementById('editPhotoInput').click()">${ai}</div><div style="font-size:12px;color:var(--text-muted);">Tap to change photo</div><input type="file" id="editPhotoInput" accept="image/*" style="display:none;" onchange="handleEditPhoto(event)"></div>
+    <div class="edit-section"><label>Name</label><input type="text" class="text-input" id="editName" value="${u.name}"></div>
     <div class="edit-section"><label>Career Status</label><div class="edit-chip-grid" id="editCareerChips">${ck}</div></div>
-    <div class="edit-section"><label>Currently Focused On</label><textarea class="text-input" id="editFocus" rows="2">${state.focus}</textarea></div>
+    <div class="edit-section"><label>Currently Focused On</label><textarea class="text-input" id="editFocus" rows="2">${u.focus||''}</textarea></div>
     <div class="edit-section"><label>Connection Goals</label><div class="edit-chip-grid" id="editConnectionChips">${cc}</div></div>
-    <div class="edit-section"><label>Interests (comma-separated)</label><textarea class="text-input" id="editInterests" rows="2">${state.interests.join(', ')}</textarea></div>
-    <div class="edit-section"><label>Could Talk About For Hours</label><input type="text" class="text-input" id="editPassion" value="${state.passion}"></div>
-    <div class="btn-row" style="margin-top:24px;"><button class="btn btn-secondary" onclick="closeSnapshot()">Cancel</button><button class="btn btn-primary" onclick="saveEditProfile()">Save Changes</button></div>`;
+    <div class="edit-section"><label>Interests (comma-separated)</label><textarea class="text-input" id="editInterests" rows="2">${(u.interests||[]).join(', ')}</textarea></div>
+    <div class="edit-section"><label>Could Talk About For Hours</label><input type="text" class="text-input" id="editPassion" value="${u.passion||''}"></div>
+    <div class="btn-row" style="margin-top:24px;"><button class="btn btn-secondary" onclick="closeSnapshot()">Cancel</button><button class="btn btn-primary" onclick="saveEdit()">Save Changes</button></div>`;
   document.getElementById('snapshotOverlay').classList.add('open');
 }
-function toggleEditChip(el){el.classList.toggle('selected');}
-function selectEditChip(el){el.parentElement.querySelectorAll('.edit-chip').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');}
-function handleEditPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.photoData=r.result;document.querySelector('.edit-photo-zone').innerHTML=`<img src="${r.result}" alt="Photo" style="width:100%;height:100%;object-fit:cover;">`;};r.readAsDataURL(f);}
-function saveEditProfile(){
-  state.name=document.getElementById('editName').value.trim()||state.name;
-  state.focus=document.getElementById('editFocus').value.trim()||state.focus;
-  state.interests=document.getElementById('editInterests').value.split(',').map(s=>s.trim()).filter(Boolean);
-  state.passion=document.getElementById('editPassion').value.trim();
-  const cs=document.querySelector('#editCareerChips .edit-chip.selected');
-  if(cs)state.career=cs.dataset.value;
-  state.connections=[...document.querySelectorAll('#editConnectionChips .edit-chip.selected')].map(c=>c.dataset.value);
-  // Update in storage
-  const allUsers=loadAllUsers();
-  const idx=allUsers.findIndex(u=>u.id===state.id);
-  if(idx>=0){allUsers[idx]={...allUsers[idx],...state};saveAllUsers(allUsers);}
-  recomputeMatches();
-  closeSnapshot();renderDashboard();showTab('profile');
+let editPhotoData = null;
+function handleEditPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{editPhotoData=r.result;document.querySelector('.edit-photo-zone').innerHTML=`<img src="${r.result}" style="width:100%;height:100%;object-fit:cover;">`;};r.readAsDataURL(f);}
+
+async function saveEdit(){
+  const body={
+    name:document.getElementById('editName').value.trim(),
+    career:(document.querySelector('#editCareerChips .edit-chip.selected')||{}).dataset?.value||currentUser.career,
+    focus:document.getElementById('editFocus').value.trim(),
+    connections:[...document.querySelectorAll('#editConnectionChips .edit-chip.selected')].map(c=>c.dataset.value),
+    interests:document.getElementById('editInterests').value.split(',').map(s=>s.trim()).filter(Boolean),
+    passion:document.getElementById('editPassion').value.trim()
+  };
+  if(editPhotoData) body.photoData = editPhotoData;
+  try{
+    const data = await api('PUT','/api/profile',body);
+    currentUser=data.user;currentMatches=data.matches||[];
+    editPhotoData=null;
+    closeSnapshot();renderDashboard();showTab('profile');
+  }catch(e){alert('Save failed: '+e.message);}
 }
 
-// ─── Auto-login from session ───
-(function init(){
-  const session=loadSession();
-  if(session&&session.id){
-    const allUsers=loadAllUsers();
-    const user=allUsers.find(u=>u.id===session.id);
-    if(user){
-      Object.assign(state,{name:user.name,email:user.email,career:user.career,focus:user.focus,connections:user.connections,interests:user.interests,passion:user.passion,photoData:user.photoData,id:user.id});
-      acceptedUsers=user.acceptedUsers||{};
-      declinedUsers=user.declinedUsers||{};
-      messages=user.messages||[];
-      currentUserMatches=computeMatches(state,allUsers);
-      renderDashboard();
-      navigate('dashboard');
-      return;
-    }
+// ─── Delete ───
+async function confirmDelete(){
+  const confirm=document.getElementById('deleteConfirmEmail').value.trim();
+  if(confirm.toLowerCase()!==currentUser.email.toLowerCase()){alert('Email does not match.');return;}
+  try{await api('DELETE','/api/account');}catch(e){}
+  authToken=null;localStorage.removeItem('netx_token');currentUser=null;
+  closeModal('deleteModal');closeSnapshot();nav('welcome');
+}
+
+// ─── Modals ───
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+// ─── Init: check for existing session ───
+(async function(){
+  if(authToken){
+    try{
+      const data=await api('GET','/api/me');
+      currentUser=data.user;currentMatches=data.matches||[];currentMessages=data.messages||[];
+      renderDashboard();nav('dashboard');
+    }catch(e){authToken=null;localStorage.removeItem('netx_token');}
   }
 })();
 </script>
